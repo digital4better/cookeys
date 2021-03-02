@@ -4,8 +4,9 @@
       <header class="header">
         <h1>Accueil</h1>
       </header>
-      <router-link to="/key_exercise" tag="b-button">Exercice 1 : La frappe des lettres</router-link>
-      <router-link to="/word_exercise" tag="b-button">Exercice 2 : Mots et phrases</router-link>
+      <router-link to="/key_exercise" tag="b-button">Exercice 1 : Les touches essentielles</router-link>
+      <router-link to="/letter_exercise" tag="b-button">Exercice 2 : La frappe des lettres</router-link>
+      <router-link to="/word_exercise" tag="b-button">Exercice 3 : Mots et phrases</router-link>
     </section>
   </div>
 </template>
