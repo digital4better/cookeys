@@ -6,16 +6,16 @@
     text-variant="white"
     header="Exercice 1"
     footer-tag="footer"
-    title="Appuie sur la touche :"
+    title="Saisis la lettre :"
     style="font-family: 'Tiresias Infofont', arial">
 
     <link href="https://fr.allfont.net/allfont.css?fonts=tiresias-infofont" rel="stylesheet" type="text/css" />
 
     <section class=body>
-      <div><span class="letter"> {{ entry }}</span></div>
-      <div><input class="input" type="text" v-model="value" @input="speakInput" @keyup="checkLetter" :disabled="success" v-focus></div>
+      <div><span class="letter"> {{ letter }}</span></div>
+      <div><input class="input" type="text" v-model="value" @keyup="checkLetter" :disabled="success" v-focus></div>
       <div>
-        <p v-if="error" class="is-error">Oups, tu t'es trompé(e) de touche, réessaie !</p>
+        <p v-if="error" class="is-error">Oups, tu t'es trompé(e) de lettre, réessaie !</p>
       </div>
       <div v-if="success">
         <span class="is-success">Bravo !</span>
@@ -24,10 +24,10 @@
     <template #footer>
       <div>
         <p class="errors-count" v-show="hasMadeOneError">
-          <strong>{{ countErrors }}</strong> erreur a été commise pour la lettre <strong>{{ entry }}</strong>
+          <strong>{{ letterErrors }}</strong> erreur a été commise pour la lettre <strong>{{ letter }}</strong>
         </p>
         <p class="errors-count" v-show="hasMadeErrors">
-          <strong>{{ countErrors }}</strong> erreurs ont été commises pour la lettre <strong>{{ entry }}</strong>
+          <strong>{{ letterErrors }}</strong> erreurs ont été commises pour la lettre <strong>{{ letter }}</strong>
         </p>
       </div>
       <div><p class="score" v-show="isEnd">Taux de réussite : {{ score }} %</p></div>
@@ -45,28 +45,26 @@ export default {
   components: {},
   data () {
     return {
-      entry: '',
+      letter: '',
       value: '',
-      letters: ['a', 'b'],
-      count: 0, // nb total d'essais
+      letters: ['a', 'b', 'c', 'd', 'e'],
+      attempts: 0, // nb total d'essais
       error: false,
       success: false,
-      countErrors: 0, // nb d'erreur par lettre
+      letterErrors: 0, // nb d'erreur par lettre
       totalErrors: 0, // nb d'erreur total
       score: 0 // pourcentage de réussite
     }
   },
   mounted: function () {
     this.initLetter()
-    // this.changeLetter()
-    // this.speakInstructions(this.consignes) // method1 will execute at pageload
   },
   computed: {
     hasMadeErrors () {
-      return (this.countErrors > 1)
+      return (this.letterErrors > 1)
     },
     hasMadeOneError () {
-      return (this.countErrors === 1)
+      return (this.letterErrors === 1)
     },
     isEnd () {
       return (this.letters.length === 0 && this.success === true)
@@ -74,68 +72,47 @@ export default {
   },
   methods: {
     checkLetter (e) {
-      this.count++
-      if (this.value !== this.entry) {
+      this.speak(e.key)
+      this.attempts++
+      if (this.value !== this.letter) {
         this.error = true
         e.target.value = ''
-        this.countErrors++
+        this.letterErrors++
         this.totalErrors++
-        this.value = e.target.value
       } else {
         this.error = false
         this.success = true
-        this.value = e.target.value
         if (this.letters.length !== 0) {
           this.changeLetter(e)
         }
       }
-      this.score = (((this.count - this.totalErrors) / this.count) * 100).toFixed(0)
+      this.value = e.target.value
+      this.score = (((this.attempts - this.totalErrors) / this.attempts) * 100).toFixed(0)
     },
     initLetter () {
       if (this.letters.length > 0) {
-        this.entry = this.letters.shift()
+        this.letter = this.letters.shift()
       }
-      // this.speakInstructions(this.entry)
+      this.speak(this.letter)
     },
     changeLetter (e) {
-      this.countErrors = 0
+      this.letterErrors = 0
       e.target.value = ''
       this.value = ''
       if (this.letters.length > 0) {
-        this.entry = this.letters.shift()
+        this.letter = this.letters.shift()
+        this.speak('lettre suivante :' + this.letter)
       }
       this.success = false
       this.error = false
-      this.speakInstructions(this.entry)
     },
-    speakInput (e) {
+    async speak (oral) {
       if (synth.speaking) {
         console.error('speechSynthesis.speaking')
-        return
-      }
-      console.log(e)
-      var oral = e.target.value
-      if (oral !== '') {
-        var utterThis = new SpeechSynthesisUtterance()
-        utterThis.text = oral
-        utterThis.onend = function (event) {
-          console.log('SpeechSynthesisUtterance.onend')
-        }
-        utterThis.onerror = function (event) {
-          console.error('SpeechSynthesisUtterance.onerror')
-        }
-        utterThis.voice = voices[0]
-        synth.speak(utterThis)
-      }
-    },
-    speakInstructions (oral) {
-      if (synth.speaking) {
-        console.error('speechSynthesis.speaking')
-        return
+        await this.$nextTick()
       }
       if (oral !== '') {
-        const utterThis = new SpeechSynthesisUtterance()
-        utterThis.text = oral
+        const utterThis = new SpeechSynthesisUtterance(oral)
         utterThis.onend = function (event) {
           console.log('SpeechSynthesisUtterance.onend')
         }

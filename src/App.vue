@@ -6,14 +6,16 @@
 
 <script>
 import Accueil from './components/accueil.vue'
-import Exercise from './components/exercise.vue'
-import Speech from './components/speech.vue'
+import KeyExercise from './components/key_exercise.vue'
+import LetterExercise from './components/letter_exercise.vue'
+import WordExercise from './components/word_exercise.vue'
 
 export default {
   components: {
     Accueil,
-    Exercise,
-    Speech
+    KeyExercise,
+    LetterExercise,
+    WordExercise
   }
 }
 </script>
