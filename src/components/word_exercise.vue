@@ -43,8 +43,6 @@ import Clock from './clock.vue'
 
 var synth = window.speechSynthesis
 
-var voices = []
-
 export default {
   components: { Clock },
   data () {
@@ -137,7 +135,9 @@ export default {
         utterThis.onerror = function (event) {
           console.error('SpeechSynthesisUtterance.onerror')
         }
-        utterThis.voice = voices[0]
+        utterThis.voice = this.$store.state.voice
+        utterThis.pitch = this.$store.state.pitch
+        utterThis.rate = this.$store.state.rate
         synth.speak(utterThis)
       }
     }

@@ -11,7 +11,7 @@
       <div class="clearfix"></div>
     </div>
     <select class="select" v-model="voiceSelect" @change="updateVoice">
-      <option v-for="option in options" :key="option.textContent">{{ option.textContent }}</option>
+      <option v-for="option in options" :key="option.dataName">{{ option.dataName}}</option>
     </select>
     <div class="controls">
       <button id="play" @click="speak">Test</button>
@@ -20,16 +20,14 @@
 </template>
 
 <script>
+
 export default {
   name: 'SpeechControls',
   data () {
     return {
       pitch: 1,
       rate: 1,
-      voiceSelect: [{
-        selectedIndex: '',
-        selectedOptions: []
-      }],
+      voiceSelect: '',
       voiceTest: 'Bienvenue dans apprenti clavier',
       options: []
     }
@@ -46,17 +44,17 @@ export default {
         else if (aname === bname) return 0
         else return +1
       })
-      // var selectedIndex = this.voiceSelect.selectedIndex < 0 ? 0 : this.voiceSelect.selectedIndex
-      // this.voiceSelect.innerHTML = ''
       for (var i = 0; i < voices.length; i++) {
         var temp = voices[i].name + ' (' + voices[i].lang + ')'
         this.options.push({
-          textContent: temp
+          textContent: temp,
+          dataName: voices[i].name
         })
       }
-      // this.voiceSelect.selectedIndex = selectedIndex
     },
     speak () {
+      this.$store.commit('updatePitch', this.pitch)
+      this.$store.commit('updateRate', this.rate)
       if (synth.speaking) {
         console.error('speechSynthesis.speaking')
         return
@@ -68,11 +66,10 @@ export default {
       utterThis.onerror = function (event) {
         console.error('SpeechSynthesisUtterance.onerror')
       }
-      // var selectedOption = this.voiceSelect.selectedOptions[0].getAttribute('data-name')
-      var selectedOption = this.voiceSelect.dataName
       for (var i = 0; i < voices.length; i++) {
-        if (voices[i].name === selectedOption) {
+        if (voices[i].name === this.voiceSelect) {
           utterThis.voice = voices[i]
+          this.$store.commit('updateVoice', voices[i])
           break
         }
       }
@@ -81,8 +78,6 @@ export default {
       synth.speak(utterThis)
     },
     updateVoice () {
-      // this.voiceSelect
-      // this.populateVoiceList()
       if (speechSynthesis.onvoiceschanged !== undefined) {
         speechSynthesis.onvoiceschanged = this.populateVoiceList
       }
