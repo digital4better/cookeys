@@ -1,12 +1,14 @@
 <template>
   <div>
+    <header class="header">
+      <h1>Accueil</h1>
+    </header>
     <section class="landing-page">
-      <header class="header">
-        <h1>Accueil</h1>
-      </header>
-      <router-link to="/key_exercise" tag="b-button">Exercice 1 : Les touches essentielles</router-link>
-      <router-link to="/letter_exercise" tag="b-button">Exercice 2 : La frappe des lettres</router-link>
-      <router-link to="/word_exercise" tag="b-button">Exercice 3 : Mots et phrases</router-link>
+      <section class=menu>
+        <b-button class="button" pill variant="secondary" @click.prevent="$router.push('key_exercise')">Les touches essentielles</b-button>
+        <b-button class="button" pill variant="secondary" @click.prevent="$router.push('letter_exercise')">Les lettres</b-button>
+        <b-button class="button" pill variant="secondary" @click.prevent="$router.push('word_exercise')">Les mots</b-button>
+      </section>
       <speech-controls></speech-controls>
     </section>
   </div>
@@ -31,8 +33,22 @@ export default {
 </script>
 
 <style scoped>
-.landing-page{
+.menu{
   display: flex;
   flex-flow: wrap column;
+}
+.header{
+  display: flex;
+  justify-content: flex-start;
+}
+.button{
+  text-align: start;
+  width: 500 px;
+  font-size: 25 px;
+}
+.landing-page{
+  display: flex;
+  flex-flow: wrap row;
+  align-content: space-between;
 }
 </style>
