@@ -30,19 +30,23 @@
           <strong>{{ wordErrors }}</strong> erreurs ont été commises pour le mot <strong>{{ word }}</strong>
         </p>
       </div>
-      <div><p class="score" v-show="isEnd">Taux de réussite : {{ score }} %</p></div>
+      <div v-show="isEnd">
+        <p class="score">Taux de réussite : {{ score }} %</p>
+        <span>Temps passé sur l'exercice :<clock ref="clock"></clock></span>
+      </div>
     </template>
   </b-card>
 </template>
 
 <script>
+import Clock from './clock.vue'
 
 var synth = window.speechSynthesis
 
 var voices = []
 
 export default {
-  components: {},
+  components: { Clock },
   data () {
     return {
       word: '',
@@ -57,6 +61,7 @@ export default {
     }
   },
   mounted: function () {
+    this.startWatch()
     this.initWord()
   },
   computed: {
@@ -71,6 +76,12 @@ export default {
     }
   },
   methods: {
+    startWatch () {
+      this.$refs.clock.start()
+    },
+    stopWatch () {
+      this.$refs.clock.stop()
+    },
     checkWord (e) {
       this.attempts++
       for (var i = 0; i < this.value.length; i++) {
@@ -87,6 +98,8 @@ export default {
         this.value = e.target.value
         if (this.words.length !== 0) {
           this.changeWord(e)
+        } else {
+          this.stopWatch()
         }
       }
       this.score = (((this.attempts - this.totalErrors) / this.attempts) * 100).toFixed(0)

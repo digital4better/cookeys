@@ -30,19 +30,23 @@
           <strong>{{ letterErrors }}</strong> erreurs ont été commises pour la lettre <strong>{{ letter }}</strong>
         </p>
       </div>
-      <div><p class="score" v-show="isEnd">Taux de réussite : {{ score }} %</p></div>
+      <div v-show="isEnd">
+        <p class="score">Taux de réussite : {{ score }} %</p>
+        <span>Temps passé sur l'exercice :<clock ref="clock"></clock></span>
+      </div>
     </template>
   </b-card>
 </template>
 
 <script>
+import Clock from './clock.vue'
 
 var synth = window.speechSynthesis
 
 var voices = []
 
 export default {
-  components: {},
+  components: { Clock },
   data () {
     return {
       letter: '',
@@ -57,6 +61,7 @@ export default {
     }
   },
   mounted: function () {
+    this.startWatch()
     this.initLetter()
   },
   computed: {
@@ -71,6 +76,12 @@ export default {
     }
   },
   methods: {
+    startWatch () {
+      this.$refs.clock.start()
+    },
+    stopWatch () {
+      this.$refs.clock.stop()
+    },
     checkLetter (e) {
       this.speak(e.key)
       this.attempts++
@@ -84,6 +95,8 @@ export default {
         this.success = true
         if (this.letters.length !== 0) {
           this.changeLetter(e)
+        } else {
+          this.stopWatch()
         }
       }
       this.value = e.target.value

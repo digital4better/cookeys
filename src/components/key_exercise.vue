@@ -18,7 +18,7 @@
         <p v-if="error" class="is-error">Oups, tu t'es trompé(e) de touche, réessaie !</p>
       </div>
       <div v-if="success">
-        <span class="is-success">Bravo !</span>
+        <p class="is-success">Bravo !</p>
       </div>
     </section>
     <template #footer>
@@ -30,24 +30,26 @@
           <strong>{{ keyErrors }}</strong> erreurs ont été commises pour la touche <strong>{{ key }}</strong>
         </p>
       </div>
-      <div><p class="score" v-show="isEnd">Taux de réussite : {{ score }} %</p></div>
+      <div v-show="isEnd">
+        <p class="score">Taux de réussite : {{ score }} %</p>
+        <span>Temps passé sur l'exercice :<clock ref="clock"></clock></span>
+      </div>
     </template>
   </b-card>
 </template>
 
 <script>
-
+import Clock from './clock.vue'
 var synth = window.speechSynthesis
-
 var voices = []
 
 export default {
-  components: {},
+  components: { Clock },
   data () {
     return {
       key: '',
       value: '',
-      keys: ['Enter', 'Espace', 'Echap', 'Verrouillage Majuscule', 'Verrouillage Num'],
+      keys: ['Enter'],
       attempts: 0, // nb total d'essais
       error: false,
       success: false,
@@ -58,6 +60,7 @@ export default {
   },
   mounted: function () {
     this.initKey()
+    this.startWatch()
   },
   computed: {
     hasMadeErrors () {
@@ -71,6 +74,12 @@ export default {
     }
   },
   methods: {
+    startWatch () {
+      this.$refs.clock.start()
+    },
+    stopWatch () {
+      this.$refs.clock.stop()
+    },
     checkKey (e) {
       console.log(e)
       this.speak(e.key)
@@ -80,15 +89,16 @@ export default {
         e.target.value = ''
         this.keyErrors++
         this.totalErrors++
-        this.value = e.target.value
       } else {
         this.error = false
         this.success = true
-        this.value = e.target.value
         if (this.keys.length !== 0) {
           this.changeKey(e)
+        } else {
+          this.stopWatch()
         }
       }
+      this.value = e.target.value
       this.score = (((this.attempts - this.totalErrors) / this.attempts) * 100).toFixed(0)
     },
     initKey () {
