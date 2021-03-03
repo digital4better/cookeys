@@ -10,6 +10,7 @@ import KeyExercise from './components/key_exercise.vue'
 import LetterExercise from './components/letter_exercise.vue'
 import WordExercise from './components/word_exercise.vue'
 import Clock from './components/clock.vue'
+import SpeechControls from './components/speech_controls.vue'
 
 export default {
   components: {
@@ -17,7 +18,8 @@ export default {
     KeyExercise,
     LetterExercise,
     WordExercise,
-    Clock
+    Clock,
+    SpeechControls
   }
 }
 </script>
