@@ -10,11 +10,11 @@
       <div class="pitch-value">{{ pitch }}</div>
       <div class="clearfix"></div>
     </div>
-    <select v-model="voiceSelect">
-
+    <select class="select" v-model="voiceSelect" @change="updateVoice">
+      <option v-for="option in options" :key="option.textContent">{{ option.textContent }}</option>
     </select>
     <div class="controls">
-      <button id="play" type="submit">Test</button>
+      <button id="play" @click="speak">Test</button>
     </div>
   </form>
 </template>
@@ -26,8 +26,16 @@ export default {
     return {
       pitch: 1,
       rate: 1,
-      voiceSelect: null
+      voiceSelect: [{
+        selectedIndex: '',
+        selectedOptions: []
+      }],
+      voiceTest: 'Bienvenue dans apprenti clavier',
+      options: []
     }
+  },
+  mounted: function () {
+    this.populateVoiceList()
   },
   methods: {
     populateVoiceList () {
@@ -38,20 +46,46 @@ export default {
         else if (aname === bname) return 0
         else return +1
       })
-      var selectedIndex = this.voiceSelect.selectedIndex < 0 ? 0 : this.voiceSelect.selectedIndex
-      this.voiceSelect.innerHTML = ''
+      // var selectedIndex = this.voiceSelect.selectedIndex < 0 ? 0 : this.voiceSelect.selectedIndex
+      // this.voiceSelect.innerHTML = ''
       for (var i = 0; i < voices.length; i++) {
-        var option = document.createElement('option')
-        option.textContent = voices[i].name + ' (' + voices[i].lang + ')'
-        if (voices[i].default) {
-          option.textContent += ' -- DEFAULT'
-        }
-
-        option.setAttribute('data-lang', voices[i].lang)
-        option.setAttribute('data-name', voices[i].name)
-        this.voiceSelect.appendChild(option)
+        var temp = voices[i].name + ' (' + voices[i].lang + ')'
+        this.options.push({
+          textContent: temp
+        })
       }
-      this.voiceSelect.selectedIndex = selectedIndex
+      // this.voiceSelect.selectedIndex = selectedIndex
+    },
+    speak () {
+      if (synth.speaking) {
+        console.error('speechSynthesis.speaking')
+        return
+      }
+      var utterThis = new SpeechSynthesisUtterance(this.voiceTest)
+      utterThis.onend = function (event) {
+        console.log('SpeechSynthesisUtterance.onend')
+      }
+      utterThis.onerror = function (event) {
+        console.error('SpeechSynthesisUtterance.onerror')
+      }
+      // var selectedOption = this.voiceSelect.selectedOptions[0].getAttribute('data-name')
+      var selectedOption = this.voiceSelect.dataName
+      for (var i = 0; i < voices.length; i++) {
+        if (voices[i].name === selectedOption) {
+          utterThis.voice = voices[i]
+          break
+        }
+      }
+      utterThis.pitch = this.pitch
+      utterThis.rate = this.rate
+      synth.speak(utterThis)
+    },
+    updateVoice () {
+      // this.voiceSelect
+      // this.populateVoiceList()
+      if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = this.populateVoiceList
+      }
     }
   }
 }
@@ -61,58 +95,10 @@ var synth = window.speechSynthesis
 // var inputTxt = document.querySelector('.txt');
 // var voiceSelect = document.querySelector('select');
 
-// var pitch = document.querySelector('#pitch');
-// var pitchValue = document.querySelector('.pitch-value');
-// var rate = document.querySelector('#rate');
-// var rateValue = document.querySelector('.rate-value');
-
 var voices = []
 
-/*
-populateVoiceList();
-if (speechSynthesis.onvoiceschanged !== undefined) {
-  speechSynthesis.onvoiceschanged = populateVoiceList;
-} */
-/* function speak(){
-    if (synth.speaking) {
-        console.error('speechSynthesis.speaking');
-        return;
-    }
-    if (inputTxt.value !== '') {
-    var utterThis = new SpeechSynthesisUtterance(inputTxt.value);
-    utterThis.onend = function (event) {
-        console.log('SpeechSynthesisUtterance.onend');
-    }
-    utterThis.onerror = function (event) {
-        console.error('SpeechSynthesisUtterance.onerror');
-    }
-    var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
-    for(i = 0; i < voices.length ; i++) {
-      if(voices[i].name === selectedOption) {
-        utterThis.voice = voices[i];
-        break;
-      }
-    }
-    utterThis.pitch = pitch.value;
-    utterThis.rate = rate.value;
-    synth.speak(utterThis);
-  }
-} */
-/*
-
-pitch.onchange = function() {
-  pitchValue.textContent = pitch.value;
-}
-
-rate.onchange = function() {
-  rateValue.textContent = rate.value;
-}
-
-this.voiceSelect.onchange = function(){
-  speak();
-}
-*/
 </script>
+
 <style scoped>
 body, html {
   margin: 0;
