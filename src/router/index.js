@@ -4,6 +4,7 @@ import Accueil from '@/components/accueil'
 import KeyExercise from '@/components/key_exercise'
 import LetterExercise from '@/components/letter_exercise'
 import WordExercise from '@/components/word_exercise'
+import SpeechControls from '@/components/speech_controls'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/word_exercise',
       name: 'word_exercise',
       component: WordExercise
+    },
+    {
+      path: '/speech_controls',
+      name: 'speech_controls',
+      component: SpeechControls
     }
   ]
 })

@@ -1,15 +1,15 @@
 <template>
   <div>
-    <header class="header">
-      <h1>Accueil</h1>
-    </header>
+    <h1 class="header">
+      Accueil
+    </h1>
     <section class="landing-page">
       <section class=menu>
         <b-button class="button" pill variant="secondary" @click.prevent="$router.push('key_exercise')">Les touches essentielles</b-button>
         <b-button class="button" pill variant="secondary" @click.prevent="$router.push('letter_exercise')">Les lettres</b-button>
         <b-button class="button" pill variant="secondary" @click.prevent="$router.push('word_exercise')">Les mots</b-button>
       </section>
-      <speech-controls></speech-controls>
+      <b-button class="controls" pill variant="primary" @click.prevent="$router.push('speech_controls')">Paramètres de lecture orale</b-button>
     </section>
   </div>
 </template>
@@ -37,10 +37,7 @@ export default {
   display: flex;
   flex-flow: wrap column;
 }
-.header{
-  display: flex;
-  justify-content: flex-start;
-}
+
 .button{
   text-align: start;
   width: 500 px;
@@ -48,7 +45,12 @@ export default {
 }
 .landing-page{
   display: flex;
-  flex-flow: wrap row;
+  flex-flow: wrap column;
   align-content: space-between;
+  align-items: flex-start;
+}
+.controls{
+  display: flex;
+  align-self: flex-end;
 }
 </style>

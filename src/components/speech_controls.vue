@@ -1,6 +1,7 @@
 <template>
-  <form id=form>
+  <form id=form @submit.prevent>
     <div>
+      <h1>Réglages de lecture orale</h1>
       <label id="rate">Rate</label><input type="range" min="0.5" max="2" value="1" step="0.1" v-model="rate" id="rate">
       <div class="rate-value">{{ rate }}</div>
       <div class="clearfix"></div>
@@ -10,8 +11,8 @@
       <div class="pitch-value">{{ pitch }}</div>
       <div class="clearfix"></div>
     </div>
-    <select class="select" v-model="voiceSelect" @change="updateVoice">
-      <option v-for="option in options" :key="option.dataName">{{ option.dataName}}</option>
+    <select class="select" v-model="voiceSelect">
+      <option v-for="option in options" :key="option.dataName">{{ option.dataName }}</option>
     </select>
     <div class="controls">
       <button id="play" @click="speak">Test</button>
@@ -20,6 +21,7 @@
 </template>
 
 <script>
+var synth = window.speechSynthesis
 
 export default {
   name: 'SpeechControls',
@@ -27,34 +29,32 @@ export default {
     return {
       pitch: 1,
       rate: 1,
-      voiceSelect: '',
+      voiceSelect: 'Google français',
       voiceTest: 'Bienvenue dans apprenti clavier',
-      options: []
+      options: [],
+      voices: []
     }
   },
   mounted: function () {
     this.populateVoiceList()
+    synth.addEventListener('voiceschanged', () => this.populateVoiceList())
   },
   methods: {
     populateVoiceList () {
-      voices = synth.getVoices().sort(function (a, b) {
-        const aname = a.name.toUpperCase()
-        const bname = b.name.toUpperCase()
-        if (aname < bname) return -1
-        else if (aname === bname) return 0
-        else return +1
-      })
-      for (var i = 0; i < voices.length; i++) {
-        var temp = voices[i].name + ' (' + voices[i].lang + ')'
-        this.options.push({
-          textContent: temp,
-          dataName: voices[i].name
+      this.voices = synth.getVoices()
+        .sort(function (a, b) {
+          const aname = a.name.toUpperCase()
+          const bname = b.name.toUpperCase()
+          if (aname < bname) return -1
+          else if (aname === bname) return 0
+          else return +1
         })
-      }
+      this.options = this.voices.map(voice => ({
+        textContent: `${voice.name} (${voice.lang})`,
+        dataName: voice.name
+      }))
     },
     speak () {
-      this.$store.commit('updatePitch', this.pitch)
-      this.$store.commit('updateRate', this.rate)
       if (synth.speaking) {
         console.error('speechSynthesis.speaking')
         return
@@ -66,31 +66,22 @@ export default {
       utterThis.onerror = function (event) {
         console.error('SpeechSynthesisUtterance.onerror')
       }
-      for (var i = 0; i < voices.length; i++) {
-        if (voices[i].name === this.voiceSelect) {
-          utterThis.voice = voices[i]
-          this.$store.commit('updateVoice', voices[i])
+      utterThis.voice = this.voices[0]
+      for (var i = 0; i < this.voices.length; i++) {
+        if (this.voices[i].name === this.voiceSelect) {
+          utterThis.voice = this.voices[i]
           break
         }
       }
+      this.$store.commit('updatePitch', this.pitch)
+      this.$store.commit('updateRate', this.rate)
+      this.$store.commit('updateVoice', utterThis.voice)
       utterThis.pitch = this.pitch
       utterThis.rate = this.rate
       synth.speak(utterThis)
-    },
-    updateVoice () {
-      if (speechSynthesis.onvoiceschanged !== undefined) {
-        speechSynthesis.onvoiceschanged = this.populateVoiceList
-      }
     }
   }
 }
-
-var synth = window.speechSynthesis
-
-// var inputTxt = document.querySelector('.txt');
-// var voiceSelect = document.querySelector('select');
-
-var voices = []
 
 </script>
 

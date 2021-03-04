@@ -4,9 +4,9 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
-    pitch: 0,
-    rate: 0,
-    voice: ''
+    pitch: 1,
+    rate: 1,
+    voice: null
   },
   mutations: {
     updatePitch (state, p) {
