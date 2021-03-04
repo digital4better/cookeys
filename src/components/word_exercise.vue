@@ -49,7 +49,7 @@ export default {
     return {
       word: '',
       value: '',
-      words: ['chat', 'jus'],
+      words: ['il fait beau aujourdhui tu trouves pas', 'jus'],
       attempts: 0, // nb total d'essais
       error: false,
       success: false,
@@ -124,11 +124,11 @@ export default {
     },
     async speak (oral) {
       if (synth.speaking) {
-        console.error('speechSynthesis.speaking')
-        await this.$nextTick()
+        synth.cancel()
       }
       if (oral !== '' && oral !== null) {
         const utterThis = new SpeechSynthesisUtterance(oral)
+
         utterThis.onend = function (event) {
           console.log('SpeechSynthesisUtterance.onend')
         }

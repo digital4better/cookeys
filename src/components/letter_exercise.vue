@@ -43,8 +43,6 @@ import Clock from './clock.vue'
 
 var synth = window.speechSynthesis
 
-// var voices = []
-
 export default {
   components: { Clock },
   data () {
@@ -121,8 +119,7 @@ export default {
     },
     async speak (oral) {
       if (synth.speaking) {
-        console.error('speechSynthesis.speaking')
-        await this.$nextTick()
+        synth.cancel()
       }
       if (oral !== '') {
         const utterThis = new SpeechSynthesisUtterance(oral)
