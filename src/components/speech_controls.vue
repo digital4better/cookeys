@@ -1,13 +1,12 @@
 <template>
   <form id=form @submit.prevent>
     <div>
-      <h1>Réglages de lecture orale</h1>
-      <label id="rate">Rate</label><input type="range" min="0.5" max="2" value="1" step="0.1" v-model="rate" id="rate">
+      <h1>Réglages</h1>
+      <label id="rate">Vitesse d'élocution</label><input type="range" min="0.5" max="2" value="1" step="0.1" v-model="rate" id="rate">
       <div class="rate-value">{{ rate }}</div>
-      <div class="clearfix"></div>
     </div>
     <div>
-      <label id="pitch">Pitch</label><input type="range" min="0" max="2" value="1" step="0.1" v-model="pitch" id="pitch">
+      <label id="pitch">Hauteur</label><input type="range" min="0" max="2" value="1" step="0.1" v-model="pitch" id="pitch">
       <div class="pitch-value">{{ pitch }}</div>
       <div class="clearfix"></div>
     </div>
@@ -30,7 +29,7 @@ export default {
       pitch: 1,
       rate: 1,
       voiceSelect: 'Google français',
-      voiceTest: 'Bienvenue dans apprenti clavier',
+      voiceTest: 'Bienvenue dans Apprenti clavier',
       options: [],
       voices: []
     }
