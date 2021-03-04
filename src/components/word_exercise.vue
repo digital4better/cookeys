@@ -13,7 +13,7 @@
 
     <section class=body>
       <section class="word">
-        <span class="letter" v-for="letter in letters" :class="{current: current === letter}">{{letter}}</span>
+        <span class="letter" v-for="letter in letters" :class="{current: letter.current}">{{letter.name}}</span>
       </section>
       <div><input class="input" type="text" v-model="value" @input="speakInput" @keyup="checkWord" :disabled="success" v-focus></div>
       <div>
@@ -53,7 +53,7 @@ export default {
       letters: [],
       current: '',
       value: '',
-      words: ['chat', 'jus'],
+      words: ['apprenti', 'clavier'],
       attempts: 0, // nb total d'essais
       error: false,
       success: false,
@@ -65,7 +65,6 @@ export default {
   mounted: function () {
     this.startWatch()
     this.changeWord()
-
   },
   computed: {
     hasMadeErrors () {
@@ -88,8 +87,9 @@ export default {
     checkWord (e) {
       this.attempts++
       for (var i = 0; i < this.value.length; i++) {
-        if (this.value[i] === this.letters[i]) {
-          this.current = this.letters[i+1]
+        if (this.value[i] === this.letters[i].name) {
+          this.letters[i].current = false
+          this.letters[i+1].current = true
         } else {
           this.error = true
           this.wordErrors++
@@ -111,9 +111,12 @@ export default {
     },
     spell () {
       for (var i = 0; i < this.word.length; i++) {
-        this.letters.push(this.word.charAt(i))
+        this.letters.push({
+          name: this.word.charAt(i),
+          current: false
+        })
       }
-      this.current = this.letters[0]
+      this.letters[0].current = true
     },
     changeWord (e) {
       this.wordErrors = 0
@@ -124,10 +127,11 @@ export default {
       }
       this.success = false
       this.error = false
-      this.speak(this.word)
+      var consigne = this.word + '.'
       for (var i = 0; i < this.letters.length; i++) {
-        setTimeout(this.speak(this.letters[i]), 10000)
+        consigne += this.letters[i].name + '.'
       }
+      this.speak(consigne)
     },
     speakInput (e) {
       var oral = e.data
@@ -135,7 +139,7 @@ export default {
     },
     speak (oral) {
       if (synth.speaking) {
-        // synth.cancel()
+        synth.cancel()
       }
       if (oral !== '' && oral !== null) {
         const utterThis = new SpeechSynthesisUtterance(oral)
