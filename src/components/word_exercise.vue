@@ -12,7 +12,9 @@
     <link href="https://fr.allfont.net/allfont.css?fonts=tiresias-infofont" rel="stylesheet" type="text/css" />
 
     <section class=body>
-      <div><span class="word"> {{ word }}</span></div>
+      <section class="word">
+        <span class="letter" v-for="letter in letters" :class="{current: current === letter}">{{letter}}</span>
+      </section>
       <div><input class="input" type="text" v-model="value" @input="speakInput" @keyup="checkWord" :disabled="success" v-focus></div>
       <div>
         <p v-if="error" class="is-error">Oups, tu t'es trompé(e) de lettre, réessaie !</p>
@@ -48,8 +50,10 @@ export default {
   data () {
     return {
       word: '',
+      letters: [],
+      current: '',
       value: '',
-      words: ['il fait beau aujourdhui tu trouves pas', 'jus'],
+      words: ['chat', 'jus'],
       attempts: 0, // nb total d'essais
       error: false,
       success: false,
@@ -60,7 +64,8 @@ export default {
   },
   mounted: function () {
     this.startWatch()
-    this.initWord()
+    this.changeWord()
+
   },
   computed: {
     hasMadeErrors () {
@@ -83,11 +88,13 @@ export default {
     checkWord (e) {
       this.attempts++
       for (var i = 0; i < this.value.length; i++) {
-        if (this.value[i] !== this.word[i]) {
+        if (this.value[i] === this.letters[i]) {
+          this.current = this.letters[i+1]
+        } else {
           this.error = true
           this.wordErrors++
           this.totalErrors++
-        }
+        } 
       }
       if (this.value === this.word) {
         this.error = false
@@ -102,29 +109,33 @@ export default {
       }
       this.score = (((this.attempts - this.totalErrors) / this.attempts) * 100).toFixed(0)
     },
-    initWord () {
-      if (this.words.length > 0) {
-        this.word = this.words.shift()
+    spell () {
+      for (var i = 0; i < this.word.length; i++) {
+        this.letters.push(this.word.charAt(i))
       }
-      this.speak(this.word)
+      this.current = this.letters[0]
     },
     changeWord (e) {
       this.wordErrors = 0
+      this.letters = []
       if (this.words.length > 0) {
         this.word = this.words.shift()
+        this.spell()
       }
       this.success = false
       this.error = false
       this.speak(this.word)
+      for (var i = 0; i < this.letters.length; i++) {
+        setTimeout(this.speak(this.letters[i]), 10000)
+      }
     },
     speakInput (e) {
-      console.log(e)
       var oral = e.data
       this.speak(oral)
     },
-    async speak (oral) {
+    speak (oral) {
       if (synth.speaking) {
-        synth.cancel()
+        // synth.cancel()
       }
       if (oral !== '' && oral !== null) {
         const utterThis = new SpeechSynthesisUtterance(oral)
@@ -164,15 +175,20 @@ font-weight: 600;
 
 .body {
 display: flex;
-flex-flow: wrap column;
 justify-content: flex-start;
 align-content: space-between;
+flex-flow: wrap column;
 }
 
-.word {
+.letter {
 visibility: aria-hidden;
 font-size: 80px;
 background: rgba(0, 0, 0, 0.003);
+white-space: nowrap;
+}
+
+.letter.current {
+  background-color: blue;
 }
 
 .input{
