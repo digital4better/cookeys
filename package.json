@@ -13,10 +13,12 @@
     "unit": "jest --config test/unit/jest.conf.js --coverage"
   },
   "dependencies": {
+    "babel": "^6.23.0",
     "bootstrap-vue": "^2.17.3",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
-    "vue-text-to-speech": "^1.0.6"
+    "vue-text-to-speech": "^1.0.6",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@babel/polyfill": "^7.11.5",
