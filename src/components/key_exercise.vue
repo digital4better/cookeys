@@ -59,8 +59,7 @@
       </div>
     </template>
   </b-card>
-  <br>
-  <b-button class="button" pill variant="primary" @click.prevent="$router.push('/')">Retour au menu principal</b-button>
+  <b-button class="home-button" pill variant="primary" @click.prevent="$router.push('/')">Retour au menu principal</b-button>
 </div>
 </template>
 
@@ -213,4 +212,9 @@ export default {
   font-size: 80px;
   margin: 16px 16px 16px 0px;
 }
+
+.home-button{
+  margin: 1em;
+}
+
 </style>

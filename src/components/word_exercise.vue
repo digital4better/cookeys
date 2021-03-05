@@ -1,7 +1,7 @@
 <template>
 <div>
   <b-card class="exercise"
-    g-variant="light"
+    bg-variant="light"
     header-bg-variant="dark"
     header-text-variant="white"
     footer-text-variant="white"
@@ -18,7 +18,7 @@
       <section class="word">
         <span class="letter" v-for="letter in letters" :class="{current: letter.current}">{{letter.name}}</span>
       </section>
-      <div><input class="input" type="text" v-model="value" @input="speakInput" @keyup="checkWord" :disabled="success" v-focus></div>
+      <div><input class="input" type="text" v-model="value" @input="checkWord" :disabled="success" v-focus></div>
       <div>
         <p v-if="error" class="is-error">Oups, tu t'es trompé(e) de lettre, réessaie !</p>
       </div>
@@ -41,8 +41,7 @@
       </div>
     </template>
   </b-card>
-  <br>
-  <b-button class="button" pill variant="primary" @click.prevent="$router.push('/')">Retour au menu principal</b-button>
+  <b-button class="home-button" pill variant="primary" @click.prevent="$router.push('/')">Retour au menu principal</b-button>
 </div>
 </template>
 
@@ -92,6 +91,7 @@ export default {
     },
     checkWord (e) {
       this.attempts++
+      // this.speak(e.key)
       for (var i = 0; i < this.value.length; i++) {
         if (this.value[i] === this.letters[i].name) {
           this.letters[i].current = false
@@ -140,10 +140,6 @@ export default {
         consigne += this.letters[i].name + '.'
       }
       this.speak(consigne)
-    },
-    speakInput (e) {
-      var oral = e.data
-      this.speak(oral)
     },
     speak (oral) {
       if (synth.speaking) {
@@ -207,6 +203,10 @@ white-space: nowrap;
 visibility: aria-hidden;
 font-size: 80px;
 margin: 16px 16px 16px 0px
+}
+
+.home-button{
+  margin: 1em;
 }
 
 </style>

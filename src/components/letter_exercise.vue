@@ -10,13 +10,13 @@
     header="Exercice 2"
     footer-tag="footer"
     title="Saisis la lettre :"
-    style="font-family: 'Tiresias Infofont', arial, align: center">
+    style="font-family: 'Tiresias Infofont', arial">
 
     <link href="https://fr.allfont.net/allfont.css?fonts=tiresias-infofont" rel="stylesheet" type="text/css" />
 
     <section class=body>
       <div><span class="letter"> {{ letter }}</span></div>
-      <div><input class="input" type="text" v-model="value" @keyup="checkLetter" :disabled="success" v-focus></div>
+      <div><input class="input" type="text" v-model="value" @input="checkLetter" :disabled="success" aria-hidden="true" v-focus></div>
       <div>
         <p v-if="error" class="is-error">Oups, tu t'es trompé(e) de lettre, réessaie !</p>
       </div>
@@ -39,8 +39,7 @@
       </div>
     </template>
   </b-card>
-  <br>
-  <b-button class="button" pill variant="primary" @click.prevent="$router.push('/')">Retour au menu principal</b-button>
+  <b-button class="home-button" pill variant="primary" @click.prevent="$router.push('/')">Retour au menu principal</b-button>
 </div>
 </template>
 
@@ -88,7 +87,7 @@ export default {
       this.$refs.clock.stop()
     },
     checkLetter (e) {
-      this.speak(e.key)
+      // this.speak(e.key)
       this.attempts++
       if (this.value !== this.letter) {
         this.error = true
@@ -172,7 +171,6 @@ align-content: space-between;
 .letter {
 visibility: aria-hidden;
 font-size: 80px;
-background: rgba(0, 0, 0, 0.003);
 }
 
 .input{
@@ -181,7 +179,7 @@ font-size: 80px;
 margin: 16px 16px 16px 0px
 }
 
-.button{
+.home-button{
   margin: 1em;
 }
 </style>
