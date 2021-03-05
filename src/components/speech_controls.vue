@@ -29,7 +29,7 @@ export default {
       pitch: 1,
       rate: 1,
       voiceSelect: 'Google français',
-      voiceTest: 'Bienvenue dans Apprenti clavier',
+      voiceTest: 'Bienvenue dans : Apprenti clavier',
       options: [],
       voices: []
     }

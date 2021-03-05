@@ -1,9 +1,12 @@
 <template>
+<div>
   <b-card class="exercise"
-    bg-variant="secondary"
+    g-variant="light"
     header-bg-variant="dark"
+    header-text-variant="white"
+    footer-text-variant="white"
     footer-bg-variant="dark"
-    text-variant="white"
+    text-variant="black"
     header="Exercice 3"
     footer-tag="footer"
     title="Saisis le mot :"
@@ -38,6 +41,9 @@
       </div>
     </template>
   </b-card>
+  <br>
+  <b-button class="button" pill variant="primary" @click.prevent="$router.push('/')">Retour au menu principal</b-button>
+</div>
 </template>
 
 <script>
@@ -89,7 +95,9 @@ export default {
       for (var i = 0; i < this.value.length; i++) {
         if (this.value[i] === this.letters[i].name) {
           this.letters[i].current = false
-          this.letters[i+1].current = true
+          if (i !== this.word.length - 1) {
+            this.letters[i+1].current = true
+          }
         } else {
           this.error = true
           this.wordErrors++
@@ -192,7 +200,7 @@ white-space: nowrap;
 }
 
 .letter.current {
-  background-color: blue;
+  background-color: #2577f1;
 }
 
 .input{

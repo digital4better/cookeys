@@ -1,10 +1,13 @@
 <template>
+<div>
   <b-card
     class="exercise"
-    bg-variant="secondary"
+    g-variant="light"
     header-bg-variant="dark"
+    header-text-variant="white"
+    footer-text-variant="white"
     footer-bg-variant="dark"
-    text-variant="white"
+    text-variant="black"
     header="Exercice 1"
     footer-tag="footer"
     title="Appuie sur la touche :"
@@ -56,6 +59,9 @@
       </div>
     </template>
   </b-card>
+  <br>
+  <b-button class="button" pill variant="primary" @click.prevent="$router.push('/')">Retour au menu principal</b-button>
+</div>
 </template>
 
 <script>

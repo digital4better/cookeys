@@ -1,13 +1,16 @@
 <template>
+<div>
   <b-card class="exercise"
-    bg-variant="secondary"
+    bg-variant="light"
     header-bg-variant="dark"
+    header-text-variant="white"
+    footer-text-variant="white"
     footer-bg-variant="dark"
-    text-variant="white"
-    header="Exercice 1"
+    text-variant="black"
+    header="Exercice 2"
     footer-tag="footer"
     title="Saisis la lettre :"
-    style="font-family: 'Tiresias Infofont', arial">
+    style="font-family: 'Tiresias Infofont', arial, align: center">
 
     <link href="https://fr.allfont.net/allfont.css?fonts=tiresias-infofont" rel="stylesheet" type="text/css" />
 
@@ -36,6 +39,9 @@
       </div>
     </template>
   </b-card>
+  <br>
+  <b-button class="button" pill variant="primary" @click.prevent="$router.push('/')">Retour au menu principal</b-button>
+</div>
 </template>
 
 <script>
@@ -75,6 +81,7 @@ export default {
   },
   methods: {
     startWatch () {
+      console.log('WATCH')
       this.$refs.clock.start()
     },
     stopWatch () {
@@ -112,12 +119,12 @@ export default {
       this.value = ''
       if (this.letters.length > 0) {
         this.letter = this.letters.shift()
-        this.speak('lettre suivante :' + this.letter)
+        setTimeout(() => this.speak(this.letter), 600)
       }
       this.success = false
       this.error = false
     },
-    async speak (oral) {
+    speak (oral) {
       if (synth.speaking) {
         synth.cancel()
       }
@@ -145,7 +152,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
 
 .errors-count {
 text-align: left;
@@ -172,5 +179,9 @@ background: rgba(0, 0, 0, 0.003);
 visibility: aria-hidden;
 font-size: 80px;
 margin: 16px 16px 16px 0px
+}
+
+.button{
+  margin: 1em;
 }
 </style>
