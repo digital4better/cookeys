@@ -64,7 +64,9 @@
 </template>
 
 <script>
+
 import Clock from "./clock.vue"
+
 var synth = window.speechSynthesis
 
 export default {

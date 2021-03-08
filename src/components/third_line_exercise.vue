@@ -7,7 +7,7 @@
     footer-text-variant="white"
     footer-bg-variant="dark"
     text-variant="black"
-    header="Exercice 5"
+    header="Exercice 4"
     footer-tag="footer"
     title="Saisis la lettre :"
     style="font-family: 'Tiresias Infofont', arial">
@@ -54,7 +54,7 @@ export default {
     return {
       letter: '',
       value: '',
-      letters: ['a', 'b', 'c', 'd', 'e'],
+      letters: ['v', 'b', 'c', 'x', 'n', 'w'],
       attempts: 0, // nb total d'essais
       error: false,
       success: false,

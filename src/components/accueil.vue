@@ -16,8 +16,14 @@
       <section class=menu>
         <h3>Liste des exercices</h3>
         <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('key_exercise')">Exercice 1 : Les touches essentielles</b-button>
-        <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('letter_exercise')">Exercice 2 : Les lettres</b-button>
-        <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('word_exercise')">Exercice 3 : Les mots</b-button>
+        <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('first_line_exercise')">Exercice 2 : Se repérer sur la première rangée</b-button>
+        <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('second_line_exercise')">Exercice 3 : Se repérer sur la deuxième rangée</b-button>
+        <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('third_line_exercise')">Exercice 4 : Se repérer sur la troisième rangée</b-button>
+        <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('letter_exercise')">Exercice 5 : Toutes les lettres</b-button>
+        <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('accent_exercise')">Exercice 6 : Les accents</b-button>
+        <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('word_exercise')">Exercice 7 : Les mots courts</b-button>
+        <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('long_word_exercise')">Exercice 8 : Plus de mots</b-button>
+        <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('sentence_exercise')">Exercice 9 : Les phrases</b-button>
       </section>
     </div>
   </div>

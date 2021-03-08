@@ -7,16 +7,18 @@
     footer-text-variant="white"
     footer-bg-variant="dark"
     text-variant="black"
-    header="Exercice 5"
+    header="Exercice 8"
     footer-tag="footer"
-    title="Saisis la lettre :"
+    title="Saisis le mot :"
     style="font-family: 'Tiresias Infofont', arial">
 
     <link href="https://fr.allfont.net/allfont.css?fonts=tiresias-infofont" rel="stylesheet" type="text/css" />
 
     <section class=body>
-      <div><span class="letter"> {{ letter }}</span></div>
-      <div><input class="input" type="text" v-model="value" @input="checkLetter" :disabled="success" aria-hidden="true" v-focus></div>
+      <section class="word">
+        <span class="letter" v-for="letter in letters" :class="{current: letter.current}">{{letter.name}}</span>
+      </section>
+      <div><input class="input" type="text" v-model="value" @input="checkWord" :disabled="success" v-focus></div>
       <div>
         <p v-if="error" class="is-error">Oups, tu t'es trompé(e) de lettre, réessaie !</p>
       </div>
@@ -27,10 +29,10 @@
     <template #footer>
       <div>
         <p class="errors-count" v-show="hasMadeOneError">
-          <strong>{{ letterErrors }}</strong> erreur a été commise pour la lettre <strong>{{ letter }}</strong>
+          <strong>{{ wordErrors }}</strong> erreur a été commise pour le mot <strong>{{ word }}</strong>
         </p>
         <p class="errors-count" v-show="hasMadeErrors">
-          <strong>{{ letterErrors }}</strong> erreurs ont été commises pour la lettre <strong>{{ letter }}</strong>
+          <strong>{{ wordErrors }}</strong> erreurs ont été commises pour le mot <strong>{{ word }}</strong>
         </p>
       </div>
       <div v-show="isEnd">
@@ -39,7 +41,7 @@
       </div>
     </template>
   </b-card>
-  <b-button class="home-button" pill variant="primary" @click.prevent="$router.push('/')">Retour au menu principal</b-button>
+  <b-button class="home-button" pill variant="primary" @click.prevent="backHome">Retour au menu principal</b-button>
 </div>
 </template>
 
@@ -52,30 +54,32 @@ export default {
   components: { Clock },
   data () {
     return {
-      letter: '',
+      word: '',
+      letters: [],
+      current: '',
       value: '',
-      letters: ['a', 'b', 'c', 'd', 'e'],
+      words: ['apprenti', 'clavier'],
       attempts: 0, // nb total d'essais
       error: false,
       success: false,
-      letterErrors: 0, // nb d'erreur par lettre
+      wordErrors: 0, // nb d'erreur par lettre
       totalErrors: 0, // nb d'erreur total
       score: 0 // pourcentage de réussite
     }
   },
   mounted: function () {
+    this.changeWord()
     this.startWatch()
-    this.initLetter()
   },
   computed: {
     hasMadeErrors () {
-      return (this.letterErrors > 1)
+      return (this.wordErrors > 1)
     },
     hasMadeOneError () {
-      return (this.letterErrors === 1)
+      return (this.wordErrors === 1)
     },
     isEnd () {
-      return (this.letters.length === 0 && this.success === true)
+      return (this.words.length === 0 && this.success === true)
     }
   },
   methods: {
@@ -85,53 +89,74 @@ export default {
     stopWatch () {
       this.$refs.clock.stop()
     },
-    resetWatch() {
+    resetWatch () {
       this.$refs.clock.reset()
     },
-    checkLetter (e) {
+    checkWord (e) {
       // choix a demander à bernadette : je laisse orca dire les touches, je ne les dit pas avec l'application
       // this.speak(e.key)
+      
       this.attempts++
-      if (this.value !== this.letter) {
-        this.error = true
-        e.target.value = ''
-        this.letterErrors++
-        this.totalErrors++
-      } else {
+      for (var i = 0; i < this.letters.length; i++) {
+        this.letters[i].current = false
+      }
+      if (this.value === '') this.letters[0].current = true
+      for (var i = 0; i < this.value.length; i++) {
+        if (this.value[i] === this.letters[i].name) {
+          this.letters[i].current = false
+          if (i !== this.word.length - 1) {
+            this.letters[i+1].current = true
+          }
+        } else {
+          this.error = true
+          this.wordErrors++
+          this.totalErrors++
+        } 
+      }
+      if (this.value === this.word) {
         this.error = false
         this.success = true
-        if (this.letters.length !== 0) {
-          this.changeLetter(e)
+        e.target.value = ''
+        this.value = e.target.value
+        if (this.words.length !== 0) {
+          this.changeWord(e)
         } else {
           this.stopWatch()
         }
       }
-      this.value = e.target.value
       this.score = (((this.attempts - this.totalErrors) / this.attempts) * 100).toFixed(0)
     },
-    initLetter () {
-      if (this.letters.length > 0) {
-        this.letter = this.letters.shift()
+    spell () {
+      for (var i = 0; i < this.word.length; i++) {
+        this.letters.push({
+          name: this.word.charAt(i),
+          current: false
+        })
       }
-      this.speak(this.letter)
+      this.letters[0].current = true
     },
-    changeLetter (e) {
-      this.letterErrors = 0
-      e.target.value = ''
-      this.value = ''
-      if (this.letters.length > 0) {
-        this.letter = this.letters.shift()
-        setTimeout(() => this.speak(this.letter), 600)
+    changeWord (e) {
+      this.wordErrors = 0
+      this.letters = []
+      if (this.words.length > 0) {
+        this.word = this.words.shift()
+        this.spell()
       }
       this.success = false
       this.error = false
+      var consigne = this.word + '.'
+      for (var i = 0; i < this.letters.length; i++) {
+        consigne += this.letters[i].name + '.'
+      }
+      this.speak(consigne)
     },
     speak (oral) {
       if (synth.speaking) {
         synth.cancel()
       }
-      if (oral !== '') {
+      if (oral !== '' && oral !== null) {
         const utterThis = new SpeechSynthesisUtterance(oral)
+
         utterThis.onend = function (event) {
           console.log('SpeechSynthesisUtterance.onend')
         }
@@ -161,7 +186,8 @@ export default {
   }
 }
 </script>
-<style scoped>
+
+<style>
 
 .errors-count {
 text-align: left;
@@ -173,14 +199,20 @@ font-weight: 600;
 
 .body {
 display: flex;
-flex-flow: wrap column;
 justify-content: flex-start;
 align-content: space-between;
+flex-flow: wrap column;
 }
 
 .letter {
 visibility: aria-hidden;
 font-size: 80px;
+background: rgba(0, 0, 0, 0.003);
+white-space: nowrap;
+}
+
+.letter.current {
+  background-color: #2577f1;
 }
 
 .input{
@@ -192,4 +224,5 @@ margin: 16px 16px 16px 0px
 .home-button{
   margin: 1em;
 }
+
 </style>

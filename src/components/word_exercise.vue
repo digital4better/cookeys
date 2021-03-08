@@ -7,7 +7,7 @@
     footer-text-variant="white"
     footer-bg-variant="dark"
     text-variant="black"
-    header="Exercice 3"
+    header="Exercice 7"
     footer-tag="footer"
     title="Saisis le mot :"
     style="font-family: 'Tiresias Infofont', arial">
