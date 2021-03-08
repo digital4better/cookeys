@@ -95,7 +95,12 @@ export default {
     checkWord (e) {
       // choix a demander à bernadette : je laisse orca dire les touches, je ne les dit pas avec l'application
       // this.speak(e.key)
+      
       this.attempts++
+      for (var i = 0; i < this.letters.length; i++) {
+        this.letters[i].current = false
+      }
+      if (this.value === '') this.letters[0].current = true
       for (var i = 0; i < this.value.length; i++) {
         if (this.value[i] === this.letters[i].name) {
           this.letters[i].current = false
