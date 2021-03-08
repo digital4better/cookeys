@@ -80,11 +80,13 @@ export default {
   },
   methods: {
     startWatch () {
-      console.log('WATCH')
       this.$refs.clock.start()
     },
     stopWatch () {
       this.$refs.clock.stop()
+    },
+    resetWatch() {
+      this.$refs.clock.reset()
     },
     checkLetter (e) {
       // choix a demander à bernadette : je laisse orca dire les touches, je ne les dit pas avec l'application
@@ -141,6 +143,9 @@ export default {
         utterThis.rate = this.$store.state.rate
         synth.speak(utterThis)
       }
+    },
+    backHome () {
+      this.$router.push('/')
     }
   },
   directives: {
@@ -149,6 +154,10 @@ export default {
         el.focus()
       }
     }
+  },
+  beforeRouteLeave (to, from , next) {
+    this.resetWatch()
+    next()
   }
 }
 </script>

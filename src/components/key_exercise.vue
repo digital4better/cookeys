@@ -59,7 +59,7 @@
       </div>
     </template>
   </b-card>
-  <b-button class="home-button" pill variant="primary" @click.prevent="$router.push('/')">Retour au menu principal</b-button>
+  <b-button class="home-button" pill variant="primary" @click.prevent="backHome">Retour au menu principal</b-button>
 </div>
 </template>
 
@@ -121,6 +121,9 @@ export default {
     stopWatch() {
       this.$refs.clock.stop()
     },
+    resetWatch() {
+      this.$refs.clock.reset()
+    },
     checkKey(e) {
       // choix a demander à bernadette : je laisse orca dire les touches, je ne les dit pas avec l'application
       // this.speak(e.key)
@@ -180,6 +183,9 @@ export default {
         synth.speak(utterThis)
       }
     },
+    backHome () {
+      this.$router.push('/')
+    }
   },
   directives: {
     focus: {
@@ -188,7 +194,11 @@ export default {
       },
     },
   },
-};
+  beforeRouteLeave (to, from , next) {
+    this.resetWatch()
+    next()
+  }
+}
 </script>
 <style>
 .errors-count {
