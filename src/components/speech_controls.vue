@@ -21,7 +21,7 @@
 
 <script>
 var synth = window.speechSynthesis
-
+var voices
 export default {
   name: 'SpeechControls',
   data () {
@@ -30,8 +30,7 @@ export default {
       rate: 1,
       voiceSelect: 'Google français',
       voiceTest: 'Bienvenue dans : Apprenti clavier',
-      options: [],
-      voices: []
+      options: []
     }
   },
   mounted: function () {
@@ -40,7 +39,7 @@ export default {
   },
   methods: {
     populateVoiceList () {
-      this.voices = synth.getVoices()
+      voices = synth.getVoices()
         .sort(function (a, b) {
           const aname = a.name.toUpperCase()
           const bname = b.name.toUpperCase()
@@ -48,15 +47,14 @@ export default {
           else if (aname === bname) return 0
           else return +1
         })
-      this.options = this.voices.map(voice => ({
+      this.options = voices.map(voice => ({
         textContent: `${voice.name} (${voice.lang})`,
         dataName: voice.name
       }))
     },
     speak () {
       if (synth.speaking) {
-        console.error('speechSynthesis.speaking')
-        return
+        synth.cancel()
       }
       var utterThis = new SpeechSynthesisUtterance(this.voiceTest)
       utterThis.onend = function (event) {
@@ -65,10 +63,10 @@ export default {
       utterThis.onerror = function (event) {
         console.error('SpeechSynthesisUtterance.onerror')
       }
-      utterThis.voice = this.voices[0]
-      for (var i = 0; i < this.voices.length; i++) {
-        if (this.voices[i].name === this.voiceSelect) {
-          utterThis.voice = this.voices[i]
+      utterThis.voice = voices[0]
+      for (var i = 0; i < voices.length; i++) {
+        if (voices[i].name === voiceselect) {
+          utterThis.voice = voices[i]
           break
         }
       }

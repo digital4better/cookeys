@@ -75,12 +75,16 @@ export default {
       value: "",
       keys: [
         {
-          keyCode: 13,
-          name: "Entrée",
+          keyCode: 18,
+          name: "Alt",
         },
         {
-          keyCode: 20,
-          name: "Verrouillage Majuscule",
+          keyCode: 16,
+          name: "Shift",
+        },
+        {
+          keyCode: 13,
+          name: "Entrée",
         },
         {
           keyCode: 17,
@@ -118,6 +122,7 @@ export default {
       this.$refs.clock.stop()
     },
     checkKey(e) {
+      // choix a demander à bernadette : je laisse orca dire les touches, je ne les dit pas avec l'application
       // this.speak(e.key)
       this.attempts++
       if (e.keyCode !== this.key.keyCode) {

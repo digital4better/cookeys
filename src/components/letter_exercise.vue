@@ -87,6 +87,7 @@ export default {
       this.$refs.clock.stop()
     },
     checkLetter (e) {
+      // choix a demander à bernadette : je laisse orca dire les touches, je ne les dit pas avec l'application
       // this.speak(e.key)
       this.attempts++
       if (this.value !== this.letter) {

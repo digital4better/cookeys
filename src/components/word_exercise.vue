@@ -68,8 +68,8 @@ export default {
     }
   },
   mounted: function () {
-    this.startWatch()
     this.changeWord()
+    this.startWatch()
   },
   computed: {
     hasMadeErrors () {
@@ -84,14 +84,16 @@ export default {
   },
   methods: {
     startWatch () {
+      console.log('WATCH')
       this.$refs.clock.start()
     },
     stopWatch () {
       this.$refs.clock.stop()
     },
     checkWord (e) {
-      this.attempts++
+      // choix a demander à bernadette : je laisse orca dire les touches, je ne les dit pas avec l'application
       // this.speak(e.key)
+      this.attempts++
       for (var i = 0; i < this.value.length; i++) {
         if (this.value[i] === this.letters[i].name) {
           this.letters[i].current = false
