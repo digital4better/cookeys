@@ -65,7 +65,7 @@ export default {
       }
       utterThis.voice = voices[0]
       for (var i = 0; i < voices.length; i++) {
-        if (voices[i].name === voiceselect) {
+        if (voices[i].name === this.voiceSelect) {
           utterThis.voice = voices[i]
           break
         }
