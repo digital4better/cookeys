@@ -9,7 +9,7 @@
     text-variant="black"
     header="Exercice 6"
     footer-tag="footer"
-    title="Saisis la lettre :"
+    title="Saisis le caractère :"
     style="font-family: 'Tiresias Infofont', arial">
 
     <link href="https://fr.allfont.net/allfont.css?fonts=tiresias-infofont" rel="stylesheet" type="text/css" />
@@ -43,8 +43,108 @@
 </div>
 </template>
 
-<script src="../char_exercise_script.js">
+<script>
+
+import Clock from './clock.vue'
+import speakMixin from '../mixins/speakMixin'
+
+export default {
+  components: { Clock },
+  mixins: [speakMixin],
+  data () {
+    return {
+      letter: '',
+      value: '',
+      letters: ['ê', 'é', 'è', 'à', 'ö'],
+      attempts: 0, // nb total d'essais
+      error: false,
+      success: false,
+      letterErrors: 0, // nb d'erreur par lettre
+      totalErrors: 0, // nb d'erreur total
+      score: 0 // pourcentage de réussite
+    }
+  },
+  mounted: function () {
+    this.startWatch()
+    this.initLetter()
+  },
+  computed: {
+    hasMadeErrors () {
+      return (this.letterErrors > 1)
+    },
+    hasMadeOneError () {
+      return (this.letterErrors === 1)
+    },
+    isEnd () {
+      return (this.letters.length === 0 && this.success === true)
+    }
+  },
+  methods: {
+    startWatch () {
+      this.$refs.clock.start()
+    },
+    stopWatch () {
+      this.$refs.clock.stop()
+    },
+    resetWatch() {
+      this.$refs.clock.reset()
+    },
+    checkLetter (e) {
+      // choix a demander à bernadette : je laisse orca dire les touches, je ne les dit pas avec l'application
+      // this.speak(e.key)
+      this.attempts++
+      if (this.value !== this.letter) {
+        this.error = true
+        e.target.value = ''
+        this.letterErrors++
+        this.totalErrors++
+      } else {
+        this.error = false
+        this.success = true
+        if (this.letters.length !== 0) {
+          this.changeLetter(e)
+        } else {
+          this.stopWatch()
+        }
+      }
+      this.value = e.target.value
+      this.score = (((this.attempts - this.totalErrors) / this.attempts) * 100).toFixed(0)
+    },
+    initLetter () {
+      if (this.letters.length > 0) {
+        this.letter = this.letters.shift()
+      }
+      this.speak(this.letter)
+    },
+    changeLetter (e) {
+      this.letterErrors = 0
+      e.target.value = ''
+      this.value = ''
+      if (this.letters.length > 0) {
+        this.letter = this.letters.shift()
+        setTimeout(() => this.speak(this.letter), 600)
+      }
+      this.success = false
+      this.error = false
+    },
+    backHome () {
+      this.$router.push('/')
+    }
+  },
+  directives: {
+    focus: {
+      inserted: function (el) {
+        el.focus()
+      }
+    }
+  },
+  beforeRouteLeave (to, from , next) {
+    this.resetWatch()
+    next()
+  }
+}
 </script>
+
 <style scoped>
 
 .errors-count {
