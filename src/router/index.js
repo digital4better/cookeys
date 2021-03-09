@@ -7,8 +7,10 @@ import FirstLineExercise from '@/components/first_line_exercise'
 import SecondLineExercise from '@/components/second_line_exercise'
 import ThirdLineExercise from '@/components/third_line_exercise'
 import WordExercise from '@/components/word_exercise'
+import LongWordExercise from '@/components/long_word_exercise'
 import AccentExercise from '@/components/accent_exercise'
 import SentenceExercise from '@/components/sentence_exercise'
+import PunctuationExercise from '@/components/punctuation_exercise'
 import SpeechControls from '@/components/speech_controls'
 
 Vue.use(Router)
@@ -56,9 +58,19 @@ export default new Router({
       component: WordExercise
     },
     {
+      path: '/long_word_exercise',
+      name: 'long_word_exercise',
+      component: LongWordExercise
+    },
+    {
       path: '/accent_exercise',
       name: 'accent_exercise',
       component: AccentExercise
+    },
+    {
+      path: '/punctuation_exercise',
+      name: 'punctuation_exercise',
+      component: PunctuationExercise
     },
     {
       path: '/sentence_exercise',
