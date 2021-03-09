@@ -2,19 +2,25 @@
   <form id=form @submit.prevent>
     <div>
       <h1>Réglages</h1>
-      <label id="rate">Vitesse d'élocution</label><input type="range" min="0.5" max="2" value="1" step="0.1" v-model="rate" id="rate">
+      <p>Réglez la vitesse d'élocution et la hauteur de la voix dans l'application. Déplacez le curseur avec les flèches pour augmenter ou diminuer ces paramètres.
+      <p>Pour changer la langue, positionnez vous sur la liste déroulante, tapez Entrée, naviguez avec les flèches puis sélectionnez la langue souhaitée avec la touche Entrée.</p>
+      <p>Vous avez un aperçu du rendu de la voix en appuyant sur le bouton Test.</p>
+      </p>
+      <label id="rate">Vitesse d'élocution</label><input type="range" min="0.5" max="2" value="1" step="0.1" v-model="rate" @focus="speak('Vitesse d\'élocution :' + rate)" id="rate">
       <div class="rate-value">{{ rate }}</div>
     </div>
     <div>
-      <label id="pitch">Hauteur</label><input type="range" min="0" max="2" value="1" step="0.1" v-model="pitch" id="pitch">
+      <label id="pitch">Hauteur</label><input type="range" min="0" max="2" value="1" step="0.1" v-model="pitch" @focus="speak('Hauteur :' + pitch)" id="pitch">
       <div class="pitch-value">{{ pitch }}</div>
       <div class="clearfix"></div>
     </div>
-    <select class="select" v-model="voiceSelect">
+    <select class="select" v-model="voiceSelect" @focus="speak('Choix de la langue')">
       <option v-for="option in options" :key="option.dataName">{{ option.dataName }}</option>
     </select>
     <div class="controls">
-      <button id="play" @click="speak">Test</button>
+      <button id="play" @click="speak('Bienvenue dans : Apprenti clavier')">Test</button>
+      <br>
+      <b-button pill variant="primary" @click.prevent="$router.push('/')">Retour au menu principal</b-button>
     </div>
   </form>
 </template>
@@ -29,7 +35,6 @@ export default {
       pitch: 1,
       rate: 1,
       voiceSelect: 'Google français',
-      voiceTest: 'Bienvenue dans : Apprenti clavier',
       options: []
     }
   },
@@ -52,11 +57,11 @@ export default {
         dataName: voice.name
       }))
     },
-    speak () {
+    speak (oral) {
       if (synth.speaking) {
         synth.cancel()
       }
-      var utterThis = new SpeechSynthesisUtterance(this.voiceTest)
+      var utterThis = new SpeechSynthesisUtterance(oral)
       utterThis.onend = function (event) {
         console.log('SpeechSynthesisUtterance.onend')
       }
@@ -83,19 +88,6 @@ export default {
 </script>
 
 <style scoped>
-body, html {
-  margin: 0;
-}
-
-html {
-  height: 100%;
-}
-
-body {
-  height: 90%;
-  max-width: 800px;
-  margin: 0 auto;
-}
 
 h1, p {
   font-family: sans-serif;
@@ -150,11 +142,18 @@ label {
 }
 
 .controls {
+  display: flex;
+  align-items: center;
+  flex-flow: wrap column;
   text-align: center;
   margin-top: 10px;
 }
 
 .controls button {
   padding: 10px;
+}
+
+.home-button{
+  padding: 50px;
 }
 </style>

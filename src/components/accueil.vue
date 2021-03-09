@@ -23,7 +23,8 @@
         <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('accent_exercise')">Exercice 6 : Les accents</b-button>
         <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('word_exercise')">Exercice 7 : Les mots courts</b-button>
         <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('long_word_exercise')">Exercice 8 : Plus de mots</b-button>
-        <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('sentence_exercise')">Exercice 9 : Les phrases</b-button>
+        <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('punctuation_exercise')">Exercice 9 : La ponctuation</b-button>
+        <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('sentence_exercise')">Exercice 10 : Les phrases</b-button>
       </section>
     </div>
   </div>

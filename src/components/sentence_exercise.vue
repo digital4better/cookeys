@@ -58,7 +58,7 @@ export default {
       letters: [],
       current: '',
       value: '',
-      words: ['Il fait beau aujourd\'hui'],
+      words: ['Il fait beau aujourd\'hui.', 'Attention, cette fenêtre est cassée !', 'Il n\'a jamais aimé les mathématiques.', 'As-tu eu le temps de passer au garage ?'],
       attempts: 0, // nb total d'essais
       error: false,
       success: false,

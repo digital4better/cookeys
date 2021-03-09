@@ -58,7 +58,7 @@ export default {
       letters: [],
       current: '',
       value: '',
-      words: ['apprenti', 'clavier'],
+      words: ['littérature', 'calculatrice', 'explication', 'république', 'rebondir', 'appréhension'],
       attempts: 0, // nb total d'essais
       error: false,
       success: false,
