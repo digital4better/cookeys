@@ -50,9 +50,10 @@
 import speakMixin from '../mixins/speakMixin'
 import wordMixin from '../mixins/wordMixin'
 import watchMixin from '../mixins/watchMixin'
+import exercisesMixin from '../mixins/exercisesMixin'
 
 export default {
-  mixins: [speakMixin, wordMixin, watchMixin],
+  mixins: [speakMixin, wordMixin, watchMixin, exercisesMixin],
   data () {
     return {
       consigne: 'Saisis le mot :',

@@ -44,12 +44,14 @@
 </template>
 
 <script>
+
 import speakMixin from '../mixins/speakMixin'
 import letterMixin from '../mixins/letterMixin'
 import watchMixin from '../mixins/watchMixin'
+import exercisesMixin from '../mixins/exercisesMixin'
 
 export default {
-  mixins: [speakMixin, letterMixin, watchMixin],
+  mixins: [speakMixin, letterMixin, watchMixin, exercisesMixin],
   data () {
     return {
       consigne: 'Saisis la lettre :',

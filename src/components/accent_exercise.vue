@@ -45,14 +45,13 @@
 
 <script>
 
-import Clock from './clock.vue'
 import speakMixin from '../mixins/speakMixin'
 import letterMixin from '../mixins/letterMixin'
 import watchMixin from '../mixins/watchMixin'
+import exercisesMixin from '../mixins/exercisesMixin'
 
 export default {
-  components: { Clock },
-  mixins: [speakMixin, letterMixin, watchMixin],
+  mixins: [speakMixin, letterMixin, watchMixin, exercisesMixin],
   data () {
     return {
       consigne: 'Saisis le caractère :',

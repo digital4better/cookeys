@@ -59,18 +59,19 @@
       </div>
     </template>
   </b-card>
-  <b-button class="home-button" pill variant="primary" @click.prevent="backHome">Retour au menu principal</b-button>
+  <b-button class="home-button" pill variant="primary" @click.prevent="$router.push('/')">Retour au menu principal</b-button>
 </div>
 </template>
 
 <script>
 
-import Clock from "./clock.vue"
-
-var synth = window.speechSynthesis
+import speakMixin from '../mixins/speakMixin'
+import keyMixin from '../mixins/letterMixin'
+import watchMixin from '../mixins/watchMixin'
+import exercisesMixin from '../mixins/exercisesMixin'
 
 export default {
-  components: { Clock },
+  mixins: [speakMixin, keyMixin, watchMixin, exercisesMixin],
   data() {
     return {
       consigne: 'Saisis le caractère :',
@@ -117,108 +118,6 @@ export default {
       totalErrors: 0, // nb d'erreur total
       score: 0, // pourcentage de réussite
     }
-  },
-  mounted: function () {
-    this.speak(this.consigne)
-    this.initKey()
-    this.startWatch()
-  },
-  computed: {
-    hasMadeErrors() {
-      return this.keyErrors > 1
-    },
-    hasMadeOneError() {
-      return this.keyErrors === 1
-    },
-    isEnd() {
-      return this.keys.length === 0 && this.success === true
-    },
-  },
-  methods: {
-    startWatch() {
-      this.$refs.clock.start()
-    },
-    stopWatch() {
-      this.$refs.clock.stop()
-    },
-    resetWatch() {
-      this.$refs.clock.reset()
-    },
-    checkKey(e) {
-      // choix a demander à bernadette : je laisse orca dire les touches, je ne les dit pas avec l'application
-      // this.speak(e.key)
-      this.attempts++
-      if (e.keyCode !== this.key.keyCode) {
-        this.error = true
-        e.target.value = ""
-        this.keyErrors++
-        this.totalErrors++
-      } else {
-        this.error = false
-        this.success = true
-        if (this.keys.length !== 0) {
-          this.changeKey(e)
-        } else {
-          this.stopWatch()
-        }
-      }
-      this.value = e.target.value
-      this.score = (
-        ((this.attempts - this.totalErrors) / this.attempts) *
-        100
-      ).toFixed(0)
-    },
-    initKey() {
-      this.success = false
-      this.error = false
-      if (this.keys.length > 0) {
-        this.key = this.keys.shift()
-      }
-      this.speak(this.key.name)
-    },
-    changeKey(e) {
-      this.keyErrors = 0
-      e.target.value = ""
-      this.value = ""
-      if (this.keys.length > 0) {
-        this.key = this.keys.shift()
-        setTimeout(() => this.speak(this.key.name), 600)
-      }
-      this.success = false
-      this.error = false
-    },
-    async speak(oral) {
-      if (synth.speaking) {
-        synth.cancel()
-      }
-      if (oral !== "") {
-        const utterThis = new SpeechSynthesisUtterance(oral)
-        utterThis.onend = function (event) {
-          console.log("SpeechSynthesisUtterance.onend")
-        }
-        utterThis.onerror = function (event) {
-          console.error("SpeechSynthesisUtterance.onerror")
-        }
-        utterThis.voice = this.$store.state.voice
-        utterThis.pitch = this.$store.state.pitch
-        utterThis.rate = this.$store.state.rate
-        synth.speak(utterThis)
-      }
-    },
-    backHome () {
-      this.$router.push('/')
-    }
-  },
-  directives: {
-    focus: {
-      inserted: function (el) {
-        el.focus()
-      },
-    },
-  },
-  beforeRouteLeave (to, from , next) {
-    this.resetWatch()
-    next()
   }
 }
 </script>

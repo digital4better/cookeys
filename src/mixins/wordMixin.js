@@ -75,16 +75,5 @@ export default {
       }
       this.speak(consigne)
     }
-  },
-  directives: {
-    focus: {
-      inserted: function (el) {
-        el.focus()
-      }
-    }
-  },
-  beforeRouteLeave (to, from , next) {
-    this.resetWatch()
-    next()
   }
 }

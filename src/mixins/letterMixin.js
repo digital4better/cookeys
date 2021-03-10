@@ -52,16 +52,5 @@ export default {
       this.value = e.target.value
       this.score = (((this.attempts - this.totalErrors) / this.attempts) * 100).toFixed(0)
     },
-  },
-  directives: {
-    focus: {
-      inserted: function (el) {
-        el.focus()
-      }
-    }
-  },
-  beforeRouteLeave (to, from , next) {
-    this.resetWatch()
-    next()
   }
 }
