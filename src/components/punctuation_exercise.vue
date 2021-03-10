@@ -9,7 +9,7 @@
     text-variant="black"
     header="Exercice 5"
     footer-tag="footer"
-    title="Saisis la lettre :"
+    title="Saisis les caractères suivants :"
     style="font-family: 'Tiresias Infofont', arial">
 
     <link href="https://fr.allfont.net/allfont.css?fonts=tiresias-infofont" rel="stylesheet" type="text/css" />
@@ -54,7 +54,7 @@ export default {
   mixins: [speakMixin, letterMixin, watchMixin, exercisesMixin],
   data() {
     return {
-      consigne: 'Saisis la lettre :',
+      consigne: 'Saisis les caractères suivants :',
       letter: '',
       value: '',
       letters: [',', '.', '!', '?', '\''],

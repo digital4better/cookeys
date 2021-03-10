@@ -9,7 +9,7 @@
     text-variant="black"
     header="Exercice 9"
     footer-tag="footer"
-    title="Saisis le mot :"
+    title="Saisis les phrases suivantes :"
     style="font-family: 'Tiresias Infofont', arial">
 
     <link href="https://fr.allfont.net/allfont.css?fonts=tiresias-infofont" rel="stylesheet" type="text/css" />
@@ -18,7 +18,7 @@
       <section class="word">
         <span class="letter" v-for="letter in letters" :class="{current: letter.current}">{{letter.name}}</span>
       </section>
-      <div><input class="input" type="text" v-model="value" @input="checkWord" :disabled="success" v-focus></div>
+      <div><input class="input" type="text" v-model="value" @keypress="stopSpeech" @input="checkWord" :disabled="success" v-focus></div>
       <div>
         <p v-if="error" class="is-error">Oups, tu t'es trompé(e) de lettre, réessaie !</p>
       </div>
@@ -46,15 +46,17 @@
 </template>
 
 <script>
-import Clock from './clock.vue'
 
-var synth = window.speechSynthesis
+import speakMixin from '../mixins/speakMixin'
+import wordMixin from '../mixins/wordMixin'
+import watchMixin from '../mixins/watchMixin'
+import exercisesMixin from '../mixins/exercisesMixin'
 
 export default {
-  components: { Clock },
+  mixins: [speakMixin, wordMixin, watchMixin, exercisesMixin],
   data () {
     return {
-      consigne: 'Saisis la phrase :',
+      consigne: 'Saisis les phrases suivantes :',
       word: '',
       letters: [],
       current: '',
@@ -63,128 +65,11 @@ export default {
       attempts: 0, // nb total d'essais
       error: false,
       success: false,
+           incorrect_previous_letter: false,
       wordErrors: 0, // nb d'erreur par lettre
       totalErrors: 0, // nb d'erreur total
       score: 0 // pourcentage de réussite
     }
-  },
-  mounted: function () {
-    this.speak(this.consigne)
-    this.changeWord()
-    this.startWatch()
-  },
-  computed: {
-    hasMadeErrors () {
-      return (this.wordErrors > 1)
-    },
-    hasMadeOneError () {
-      return (this.wordErrors === 1)
-    },
-    isEnd () {
-      return (this.words.length === 0 && this.success === true)
-    }
-  },
-  methods: {
-    startWatch () {
-      this.$refs.clock.start()
-    },
-    stopWatch () {
-      this.$refs.clock.stop()
-    },
-    resetWatch () {
-      this.$refs.clock.reset()
-    },
-    checkWord (e) {
-      // choix a demander à bernadette : je laisse orca dire les touches, je ne les dit pas avec l'application
-      // this.speak(e.key)
-      
-      this.attempts++
-      for (var i = 0; i < this.letters.length; i++) {
-        this.letters[i].current = false
-      }
-      if (this.value === '') this.letters[0].current = true
-      for (var i = 0; i < this.value.length; i++) {
-        if (this.value[i] === this.letters[i].name) {
-          this.letters[i].current = false
-          if (i !== this.word.length - 1) {
-            this.letters[i+1].current = true
-          }
-        } else {
-          this.error = true
-          this.wordErrors++
-          this.totalErrors++
-        } 
-      }
-      if (this.value === this.word) {
-        this.error = false
-        this.success = true
-        e.target.value = ''
-        this.value = e.target.value
-        if (this.words.length !== 0) {
-          this.changeWord(e)
-        } else {
-          this.stopWatch()
-        }
-      }
-      this.score = (((this.attempts - this.totalErrors) / this.attempts) * 100).toFixed(0)
-    },
-    spell () {
-      for (var i = 0; i < this.word.length; i++) {
-        this.letters.push({
-          name: this.word.charAt(i),
-          current: false
-        })
-      }
-      this.letters[0].current = true
-    },
-    changeWord (e) {
-      this.wordErrors = 0
-      this.letters = []
-      if (this.words.length > 0) {
-        this.word = this.words.shift()
-        this.spell()
-      }
-      this.success = false
-      this.error = false
-      var consigne = this.word + '.'
-      for (var i = 0; i < this.letters.length; i++) {
-        consigne += this.letters[i].name + '.'
-      }
-      this.speak(consigne)
-    },
-    speak (oral) {
-      if (synth.speaking) {
-        synth.cancel()
-      }
-      if (oral !== '' && oral !== null) {
-        const utterThis = new SpeechSynthesisUtterance(oral)
-
-        utterThis.onend = function (event) {
-          console.log('SpeechSynthesisUtterance.onend')
-        }
-        utterThis.onerror = function (event) {
-          console.error('SpeechSynthesisUtterance.onerror')
-        }
-        utterThis.voice = this.$store.state.voice
-        utterThis.pitch = this.$store.state.pitch
-        utterThis.rate = this.$store.state.rate
-        synth.speak(utterThis)
-      }
-    },
-    backHome () {
-      this.$router.push('/')
-    }
-  },
-  directives: {
-    focus: {
-      inserted: function (el) {
-        el.focus()
-      }
-    }
-  },
-  beforeRouteLeave (to, from , next) {
-    this.resetWatch()
-    next()
   }
 }
 </script>

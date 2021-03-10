@@ -19,6 +19,12 @@ export default {
         utterThis.rate = this.$store.state.rate
         synth.speak(utterThis)
       }
+    },
+    stopSpeech () {
+      synth.cancel()
+    },
+    speakDelayed (oral) {
+      setTimeout(() => this.speak(oral), 600)
     }
   }
 }

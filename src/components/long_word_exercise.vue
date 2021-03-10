@@ -9,7 +9,7 @@
     text-variant="black"
     header="Exercice 8"
     footer-tag="footer"
-    title="Saisis le mot :"
+    title="Saisis les mots suivants :"
     style="font-family: 'Tiresias Infofont', arial">
 
     <link href="https://fr.allfont.net/allfont.css?fonts=tiresias-infofont" rel="stylesheet" type="text/css" />
@@ -18,7 +18,7 @@
       <section class="word">
         <span class="letter" v-for="letter in letters" :class="{current: letter.current}">{{letter.name}}</span>
       </section>
-      <div><input class="input" type="text" v-model="value" @input="checkWord" :disabled="success" v-focus></div>
+      <div><input class="input" type="text" v-model="value" @keypress="stopSpeech" @input="checkWord" :disabled="success" v-focus></div>
       <div>
         <p v-if="error" class="is-error">Oups, tu t'es trompé(e) de lettre, réessaie !</p>
       </div>
@@ -56,7 +56,7 @@ export default {
   mixins: [speakMixin, wordMixin, watchMixin, exercisesMixin],
   data () {
     return {
-      consigne: 'Saisis le mot :',
+      consigne: 'Saisis les mots suivants :',
       word: '',
       letters: [],
       current: '',

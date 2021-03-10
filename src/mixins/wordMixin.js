@@ -37,6 +37,12 @@ export default {
           return
         } 
       }
+      for (var i = 0; i < this.letters.length; i++) {
+        if (this.letters[i].current) {
+          if (this.letters[i].name === ' ') this.speakDelayed('Espace')
+          else this.speakDelayed(this.letters[i].name)
+        }
+      }
       if (this.value === this.word) {
         this.error = false
         this.success = true
@@ -70,9 +76,9 @@ export default {
       this.success = false
       this.error = false
       var consigne = this.word + '.'
-      for (var i = 0; i < this.letters.length; i++) {
+      /* for (var i = 0; i < this.letters.length; i++) {
         consigne += this.letters[i].name + '.'
-      }
+      } */
       this.speak(consigne)
     }
   }

@@ -10,7 +10,7 @@
     text-variant="black"
     header="Exercice 1"
     footer-tag="footer"
-    title="Appuie sur la touche :"
+    title="Appuie sur les touches suivantes :"
     style="font-family: 'Tiresias Infofont', arial"
   >
     <link
@@ -74,7 +74,7 @@ export default {
   mixins: [speakMixin, keyMixin, watchMixin, exercisesMixin],
   data() {
     return {
-      consigne: 'Appuie sur la touche :',
+      consigne: 'Appuie sur les touches suivnates :',
       key: "",
       value: "",
       keys: [
