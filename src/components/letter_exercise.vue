@@ -52,6 +52,7 @@ export default {
   components: { Clock },
   data () {
     return {
+      consigne: 'Saisis la lettre :',
       letter: '',
       value: '',
       letters: ['a', 'b', 'c', 'd', 'e'],
@@ -64,6 +65,7 @@ export default {
     }
   },
   mounted: function () {
+    this.speak(this.consigne)
     this.startWatch()
     this.initLetter()
   },
@@ -89,8 +91,6 @@ export default {
       this.$refs.clock.reset()
     },
     checkLetter (e) {
-      // choix a demander à bernadette : je laisse orca dire les touches, je ne les dit pas avec l'application
-      // this.speak(e.key)
       this.attempts++
       if (this.value !== this.letter) {
         this.error = true
@@ -113,7 +113,7 @@ export default {
       if (this.letters.length > 0) {
         this.letter = this.letters.shift()
       }
-      this.speak(this.letter)
+      setTimeout(() => this.speak(this.letter), 1500)
     },
     changeLetter (e) {
       this.letterErrors = 0

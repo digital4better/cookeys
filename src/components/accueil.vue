@@ -33,49 +33,8 @@
 <script>
 import SpeechControls from './speech_controls.vue'
 
-/* var synth = window.speechSynthesis
-var voices = []
-var pitch = 1
-var rate = 1 */
-
 export default {
   components: { SpeechControls },
-  data () {
-    return {
-      // choix à demander à bernadette : je laisse ORCA lire les consignes (s'il peut ?) et je ne les lis pas avec l'application
-      // consignes: 'Bienvenue dans : apprenti clavier, un outil dapprentissage de frappe au clavier. Pour parcourir les exercices, utilise la touche Tab. Pour rentrer dans un exercice, appuie sur Entrée.'
-    }
-  },
-  mounted: function () {
-    // this.speak(this.consignes)
-  },
-  methods: {
-    /* speak (oral) {
-      if (synth.speaking) {
-        synth.cancel()
-      }
-      var utterThis = new SpeechSynthesisUtterance(oral)
-      utterThis.onend = function (event) {
-        console.log('SpeechSynthesisUtterance.onend')
-      }
-      utterThis.onerror = function (event) {
-        console.error('SpeechSynthesisUtterance.onerror')
-      }
-      utterThis.voice = voices[0]
-      for (var i = 0; i < voices.length; i++) {
-        if (voices[i].name === voiceselect) {
-          utterThis.voice = voices[i]
-          break
-        }
-      }
-      this.$store.commit('updatePitch', pitch)
-      this.$store.commit('updateRate', rate)
-      this.$store.commit('updateVoice', utterThis.voice)
-      utterThis.pitch = pitch
-      utterThis.rate = rate
-      synth.speak(utterThis)
-    } */
-  }
 }
 </script>
 

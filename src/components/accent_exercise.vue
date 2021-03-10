@@ -47,12 +47,14 @@
 
 import Clock from './clock.vue'
 import speakMixin from '../mixins/speakMixin'
+import initLetterMixin from '../mixins/initLetterMixin'
 
 export default {
   components: { Clock },
-  mixins: [speakMixin],
+  mixins: [speakMixin, initLetterMixin],
   data () {
     return {
+      consigne: 'Saisis le caractère :',
       letter: '',
       value: '',
       letters: ['ê', 'é', 'è', 'à', 'ö'],
@@ -65,6 +67,7 @@ export default {
     }
   },
   mounted: function () {
+    this.speak(this.consigne)
     this.startWatch()
     this.initLetter()
   },
@@ -90,8 +93,6 @@ export default {
       this.$refs.clock.reset()
     },
     checkLetter (e) {
-      // choix a demander à bernadette : je laisse orca dire les touches, je ne les dit pas avec l'application
-      // this.speak(e.key)
       this.attempts++
       if (this.value !== this.letter) {
         this.error = true
@@ -109,12 +110,6 @@ export default {
       }
       this.value = e.target.value
       this.score = (((this.attempts - this.totalErrors) / this.attempts) * 100).toFixed(0)
-    },
-    initLetter () {
-      if (this.letters.length > 0) {
-        this.letter = this.letters.shift()
-      }
-      this.speak(this.letter)
     },
     changeLetter (e) {
       this.letterErrors = 0

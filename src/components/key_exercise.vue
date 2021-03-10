@@ -73,6 +73,7 @@ export default {
   components: { Clock },
   data() {
     return {
+      consigne: 'Appuie sur la touche :',
       key: "",
       value: "",
       keys: [
@@ -118,6 +119,7 @@ export default {
     }
   },
   mounted: function () {
+    this.speak(this.consigne)
     this.initKey()
     this.startWatch()
   },

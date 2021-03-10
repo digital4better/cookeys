@@ -54,6 +54,7 @@ export default {
   components: { Clock },
   data () {
     return {
+      consigne: 'Saisis le mot :',
       word: '',
       letters: [],
       current: '',
@@ -61,6 +62,7 @@ export default {
       words: ['littérature', 'calculatrice', 'explication', 'république', 'rebondir', 'appréhension'],
       attempts: 0, // nb total d'essais
       error: false,
+      incorrect_previous_letter: false,
       success: false,
       wordErrors: 0, // nb d'erreur par lettre
       totalErrors: 0, // nb d'erreur total
@@ -68,6 +70,7 @@ export default {
     }
   },
   mounted: function () {
+    this.speak(this.consigne)
     this.changeWord()
     this.startWatch()
   },
@@ -95,7 +98,6 @@ export default {
     checkWord (e) {
       // choix a demander à bernadette : je laisse orca dire les touches, je ne les dit pas avec l'application
       // this.speak(e.key)
-      
       this.attempts++
       for (var i = 0; i < this.letters.length; i++) {
         this.letters[i].current = false
@@ -109,8 +111,11 @@ export default {
           }
         } else {
           this.error = true
+          if (this.incorrect_previous_letter) return
+          this.incorrect_previous_letter = true
           this.wordErrors++
           this.totalErrors++
+          return
         } 
       }
       if (this.value === this.word) {
@@ -124,6 +129,7 @@ export default {
           this.stopWatch()
         }
       }
+      this.incorrect_previous_letter = false
       this.score = (((this.attempts - this.totalErrors) / this.attempts) * 100).toFixed(0)
     },
     spell () {

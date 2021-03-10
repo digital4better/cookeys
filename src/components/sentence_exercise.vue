@@ -54,6 +54,7 @@ export default {
   components: { Clock },
   data () {
     return {
+      consigne: 'Saisis la phrase :',
       word: '',
       letters: [],
       current: '',
@@ -68,6 +69,7 @@ export default {
     }
   },
   mounted: function () {
+    this.speak(this.consigne)
     this.changeWord()
     this.startWatch()
   },
