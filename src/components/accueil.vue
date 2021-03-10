@@ -14,17 +14,26 @@
       <b-button class="controls" pill variant="primary" @click.prevent="$router.push('speech_controls')">Paramètres de lecture orale</b-button>
       <br>
       <section class=menu>
-        <h3>Liste des exercices</h3>
-        <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('key_exercise')">Exercice 1 : Les touches essentielles</b-button>
-        <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('punctuation_exercise')">Exercice 9 : La ponctuation</b-button>
-        <br>
-        <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('letter_exercise')">Exercice 5 : Toutes les lettres</b-button>
-        <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('accent_exercise')">Exercice 6 : Les accents</b-button>
-        <br>
-        <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('word_exercise')">Exercice 7 : Les mots courts</b-button>
-        <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('long_word_exercise')">Exercice 8 : Plus de mots</b-button>
-        <br>
-        <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('sentence_exercise')">Exercice 10 : Les phrases</b-button>
+        <section class="keys">
+          <h3>Repérer les touches</h3>
+          <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('key_exercise')">Exercice 1 : Les touches essentielles</b-button>
+          <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('letter_exercise')">Exercice 2 : Les lettres</b-button>
+          <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('punctuation_exercise')">Exercice 3 : La ponctuation</b-button>
+        </section>
+        <section class="words">
+          <h3>Écrire des mots</h3>
+          <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('right_hand_word_exercise')">Exercice 4 : Se servir de la main droite</b-button>
+          <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('left_hand_word_exercise')">Exercice 5 : Se servir de la main gauche</b-button>
+          <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('both_hands_word_exercise')">Exercice 6 : Se servir des deux mains</b-button>
+          <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('punctuation_word_exercise')">Exercice 7 : Les mots et la ponctuation</b-button>
+          <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('accent_word_exercise')">Exercice 8 : Les mots avec accents</b-button>
+          <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('capital_letters_accent_word_exercise')">Exercice 9 : Les mots avec accents et majuscules</b-button>
+          <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('special_characters_word_exercise')">Exercice 10 : Des mots et des caractères spéciaux</b-button>
+        </section>
+        <section class="further">
+          <h3>Pour aller plus loin</h3>
+          <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('sentence_exercise')">Exercice 11 : Les phrases</b-button>
+        </section>
       </section>
     </div>
   </div>
@@ -63,10 +72,14 @@ export default {
 
 .menu{
   display: flex;
-  flex-flow: wrap column;
-  align-content: flex-start;
+  flex-flow: wrap row;
+  justify-content: space-around;
 }
-
+.keys .words .further {
+  display: flex;
+  flex-flow: wrap column;
+  justify-self: center;
+}
 .body{
   margin: 1em;
 }
