@@ -3,9 +3,6 @@ import Router from 'vue-router'
 import Accueil from '@/components/accueil'
 import KeyExercise from '@/components/key_exercise'
 import LetterExercise from '@/components/letter_exercise'
-import FirstLineExercise from '@/components/first_line_exercise'
-import SecondLineExercise from '@/components/second_line_exercise'
-import ThirdLineExercise from '@/components/third_line_exercise'
 import WordExercise from '@/components/word_exercise'
 import LongWordExercise from '@/components/long_word_exercise'
 import AccentExercise from '@/components/accent_exercise'
@@ -31,21 +28,6 @@ export default new Router({
       path: '/key_exercise',
       name: 'key_exercise',
       component: KeyExercise
-    },
-    {
-      path: '/first_line_exercise',
-      name: 'first_line_exercise',
-      component: FirstLineExercise
-    },
-    {
-      path: '/second_line_exercise',
-      name: 'second_line_exercise',
-      component: SecondLineExercise
-    },
-    {
-      path: '/third_line_exercise',
-      name: 'third_line_exercise',
-      component: ThirdLineExercise
     },
     {
       path: '/letter_exercise',
