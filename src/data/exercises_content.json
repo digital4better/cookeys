@@ -33,7 +33,7 @@
       "name": "Alt Gr"
     }
   ],
-  
+
   "letters": [
     "a",
     "b",
@@ -62,13 +62,7 @@
     "y",
     "z"
   ],
-  "accents": [
-    "ê",
-    "é",
-    "è",
-    "à",
-    "ö"
-  ],
+
   "left-hand-words": [
     "poil",
     "moi",
@@ -193,7 +187,7 @@
     "quolibet",
     "querelle"
   ],
-  "special-caracters-words": [
+  "special-characters-words": [
     "s'appuyer",
     "(parenthèse)",
     "[crochet]",
@@ -235,7 +229,7 @@
     "grève",
     "caractère",
     "célèbre",
-    "Éphémère",
+    "éphémère",
     "géomètre",
     "métèque",
     "au-delà",

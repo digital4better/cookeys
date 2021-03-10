@@ -63,7 +63,7 @@ export default {
       letters: [],
       current: '',
       value: '',
-      words: data.both-hands-words,
+      words: data.special-characters-words,
       attempts: 0, // nb total d'essais
       error: false,
       incorrect_previous_letter: false,

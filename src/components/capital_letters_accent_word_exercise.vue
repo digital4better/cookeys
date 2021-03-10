@@ -7,18 +7,16 @@
     footer-text-variant="white"
     footer-bg-variant="dark"
     text-variant="black"
-    header="Exercice 7"
+    header="Exercice 6"
     footer-tag="footer"
-    title="Saisis les mots suivants :"
+    title="Saisis les caractères suivnats :"
     style="font-family: 'Tiresias Infofont', arial">
 
     <link href="https://fr.allfont.net/allfont.css?fonts=tiresias-infofont" rel="stylesheet" type="text/css" />
 
     <section class=body>
-      <section class="word">
-        <span class="letter" v-for="letter in letters" :class="{current: letter.current}">{{letter.name}}</span>
-      </section>
-      <div><input class="input" type="text" v-model="value" @keypress="stopSpeech" @input="checkWord" :disabled="success" v-focus></div>
+      <div><span class="letter"> {{ letter }}</span></div>
+      <div><input class="input" type="text" v-model="value" @input="checkLetter" :disabled="success" aria-hidden="true" v-focus></div>
       <div>
         <p v-if="error" class="is-error">Oups, tu t'es trompé(e) de lettre, réessaie !</p>
       </div>
@@ -29,10 +27,10 @@
     <template #footer>
       <div>
         <p class="errors-count" v-show="hasMadeOneError">
-          <strong>{{ wordErrors }}</strong> erreur a été commise pour le mot <strong>{{ word }}</strong>
+          <strong>{{ letterErrors }}</strong> erreur a été commise pour la lettre <strong>{{ letter }}</strong>
         </p>
         <p class="errors-count" v-show="hasMadeErrors">
-          <strong>{{ wordErrors }}</strong> erreurs ont été commises pour le mot <strong>{{ word }}</strong>
+          <strong>{{ letterErrors }}</strong> erreurs ont été commises pour la lettre <strong>{{ letter }}</strong>
         </p>
       </div>
       <div v-show="isEnd">
@@ -48,35 +46,32 @@
 <script>
 
 import speakMixin from '../mixins/speakMixin'
-import wordMixin from '../mixins/wordMixin'
+import letterMixin from '../mixins/letterMixin'
 import watchMixin from '../mixins/watchMixin'
 import exercisesMixin from '../mixins/exercisesMixin'
 
 const data = require('../data/exercises_content.json')
 
 export default {
-  mixins: [speakMixin, wordMixin, watchMixin, exercisesMixin],
+  mixins: [speakMixin, letterMixin, watchMixin, exercisesMixin],
   data () {
     return {
-      consigne: 'Saisis les mots suivants :',
-      word: '',
-      letters: [],
-      current: '',
+      consigne: 'Saisis les caractères suivants :',
+      letter: '',
       value: '',
-      words: data.both-hands-words,
+      letters: data.capital-letters-accents-words,
       attempts: 0, // nb total d'essais
       error: false,
-      incorrect_previous_letter: false,
       success: false,
-      wordErrors: 0, // nb d'erreur par lettre
+      letterErrors: 0, // nb d'erreur par lettre
       totalErrors: 0, // nb d'erreur total
       score: 0 // pourcentage de réussite
     }
-  }
+  }  
 }
 </script>
 
-<style>
+<style scoped>
 
 .errors-count {
 text-align: left;
@@ -88,20 +83,14 @@ font-weight: 600;
 
 .body {
 display: flex;
+flex-flow: wrap column;
 justify-content: flex-start;
 align-content: space-between;
-flex-flow: wrap column;
 }
 
 .letter {
 visibility: aria-hidden;
 font-size: 80px;
-background: rgba(0, 0, 0, 0.003);
-white-space: nowrap;
-}
-
-.letter.current {
-  background-color: #2577f1;
 }
 
 .input{
@@ -113,5 +102,4 @@ margin: 16px 16px 16px 0px
 .home-button{
   margin: 1em;
 }
-
 </style>
