@@ -28,7 +28,7 @@
           class="input"
           type="text"
           v-model="value"
-          @keyup="checkKey"
+          @input="checkKey"
           :disabled="success"
           v-focus
         />
@@ -66,7 +66,7 @@
 <script>
 
 import speakMixin from '../mixins/speakMixin'
-import keyMixin from '../mixins/letterMixin'
+import keyMixin from '../mixins/keyMixin'
 import watchMixin from '../mixins/watchMixin'
 import exercisesMixin from '../mixins/exercisesMixin'
 

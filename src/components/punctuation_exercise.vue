@@ -1,56 +1,36 @@
 <template>
 <div>
-  <b-card
-    class="exercise"
-    g-variant="light"
+  <b-card class="exercise"
+    bg-variant="light"
     header-bg-variant="dark"
     header-text-variant="white"
     footer-text-variant="white"
     footer-bg-variant="dark"
     text-variant="black"
-    header="Exercice 9"
+    header="Exercice 5"
     footer-tag="footer"
-    title="Appuie sur la touche :"
-    style="font-family: 'Tiresias Infofont', arial"
-  >
-    <link
-      href="https://fr.allfont.net/allfont.css?fonts=tiresias-infofont"
-      rel="stylesheet"
-      type="text/css"
-    />
+    title="Saisis la lettre :"
+    style="font-family: 'Tiresias Infofont', arial">
 
-    <section class="body">
+    <link href="https://fr.allfont.net/allfont.css?fonts=tiresias-infofont" rel="stylesheet" type="text/css" />
+
+    <section class=body>
+      <div><span class="letter"> {{ letter }}</span></div>
+      <div><input class="input" type="text" v-model="value" @input="checkLetter" :disabled="success" aria-hidden="true" v-focus></div>
       <div>
-        <span class="key"> {{ key.name }}</span>
-      </div>
-      <div>
-        <input
-          class="input"
-          type="text"
-          v-model="value"
-          @keyup="checkKey"
-          :disabled="success"
-          v-focus
-        />
-      </div>
-      <div>
-        <p v-if="error" class="is-error">
-          Oups, tu t'es trompé(e) de touche, réessaie !
-        </p>
+        <p v-if="error" class="is-error">Oups, tu t'es trompé(e) de lettre, réessaie !</p>
       </div>
       <div v-if="success">
-        <p class="is-success">Bravo !</p>
+        <span class="is-success">Bravo !</span>
       </div>
     </section>
     <template #footer>
       <div>
         <p class="errors-count" v-show="hasMadeOneError">
-          <strong>{{ keyErrors }}</strong> erreur a été commise pour la touche
-          <strong>{{ key.name }}</strong>
+          <strong>{{ letterErrors }}</strong> erreur a été commise pour la lettre <strong>{{ letter }}</strong>
         </p>
         <p class="errors-count" v-show="hasMadeErrors">
-          <strong>{{ keyErrors }}</strong> erreurs ont été commises pour la
-          touche <strong>{{ key.name }}</strong>
+          <strong>{{ letterErrors }}</strong> erreurs ont été commises pour la lettre <strong>{{ letter }}</strong>
         </p>
       </div>
       <div v-show="isEnd">
@@ -66,91 +46,56 @@
 <script>
 
 import speakMixin from '../mixins/speakMixin'
-import keyMixin from '../mixins/letterMixin'
+import letterMixin from '../mixins/letterMixin'
 import watchMixin from '../mixins/watchMixin'
 import exercisesMixin from '../mixins/exercisesMixin'
 
 export default {
-  mixins: [speakMixin, keyMixin, watchMixin, exercisesMixin],
+  mixins: [speakMixin, letterMixin, watchMixin, exercisesMixin],
   data() {
     return {
-      consigne: 'Saisis le caractère :',
-      key: "",
-      value: "",
-      keys: [
-        {
-          keyCode: 18,
-          name: "Alt gauche",
-        },
-        {
-          keyCode: 16,
-          name: "Maj gauche",
-        },
-        {
-          keyCode: 13,
-          name: "Entrée",
-        },
-        {
-          keyCode: 17,
-          name: "Control",
-        },
-        {
-          keyCode: 27,
-          name: "Echap",
-        },
-        {
-          keyCode: 32,
-          name: "Espace",
-        },
-        {
-          keyCode: 8,
-          name: "Retour arrière",
-        },
-        {
-          keyCode: 225,
-          name: "Alt Gr",
-        }
-      ],
+      consigne: 'Saisis la lettre :',
+      letter: '',
+      value: '',
+      letters: [',', '.', '!', '?', '\''],
       attempts: 0, // nb total d'essais
       error: false,
       success: false,
-      keyErrors: 0, // nb d'erreur par lettre
+      letterErrors: 0, // nb d'erreur par lettre
       totalErrors: 0, // nb d'erreur total
-      score: 0, // pourcentage de réussite
+      score: 0 // pourcentage de réussite
     }
   }
 }
 </script>
 <style>
 .errors-count {
-  text-align: left;
+text-align: left;
 }
 
 .errors-count strong {
-  font-weight: 600;
+font-weight: 600;
 }
 
 .body {
-  display: flex;
-  flex-flow: wrap column;
-  justify-content: flex-start;
-  align-content: space-between;
+display: flex;
+flex-flow: wrap column;
+justify-content: flex-start;
+align-content: space-between;
 }
 
-.key {
-  visibility: aria-hidden;
-  font-size: 80px;
-  background: rgba(0, 0, 0, 0.003);
+.letter {
+visibility: aria-hidden;
+font-size: 80px;
 }
 
-.input {
-  visibility: aria-hidden;
-  font-size: 80px;
-  margin: 16px 16px 16px 0px;
+.input{
+visibility: aria-hidden;
+font-size: 80px;
+margin: 16px 16px 16px 0px
 }
 
 .home-button{
   margin: 1em;
 }
-
 </style>

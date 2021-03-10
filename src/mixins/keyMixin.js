@@ -17,6 +17,7 @@ export default {
   },
   methods: {
     checkKey(e) {
+      console.log(e)
       this.attempts++
       if (e.keyCode !== this.key.keyCode) {
         this.error = true
@@ -33,10 +34,7 @@ export default {
         }
       }
       this.value = e.target.value
-      this.score = (
-        ((this.attempts - this.totalErrors) / this.attempts) *
-        100
-      ).toFixed(0)
+      this.score = (((this.attempts - this.totalErrors) / this.attempts) * 100).toFixed(0)
     },
     initKey() {
       this.success = false

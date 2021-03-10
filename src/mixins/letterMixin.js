@@ -34,6 +34,7 @@ export default {
       this.error = false
     },
     checkLetter (e) {
+      console.log(e)
       this.attempts++
       if (this.value !== this.letter) {
         this.error = true
@@ -51,6 +52,6 @@ export default {
       }
       this.value = e.target.value
       this.score = (((this.attempts - this.totalErrors) / this.attempts) * 100).toFixed(0)
-    },
+    }
   }
 }
