@@ -57,7 +57,7 @@ export default {
       consigne: 'Saisis les caractères suivants :',
       letter: '',
       value: '',
-      letters: [',', '.', '!', '?', '\''],
+      letters: data.punctuation,
       attempts: 0, // nb total d'essais
       error: false,
       success: false,

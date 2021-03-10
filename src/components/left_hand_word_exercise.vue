@@ -52,6 +52,8 @@ import wordMixin from '../mixins/wordMixin'
 import watchMixin from '../mixins/watchMixin'
 import exercisesMixin from '../mixins/exercisesMixin'
 
+const data = require('../data/exercises_content.json')
+
 export default {
   mixins: [speakMixin, wordMixin, watchMixin, exercisesMixin],
   data () {
@@ -61,7 +63,7 @@ export default {
       letters: [],
       current: '',
       value: '',
-      words: ['littérature', 'calculatrice', 'explication', 'république', 'rebondir', 'appréhension'],
+      words: data.left-hand-words,
       attempts: 0, // nb total d'essais
       error: false,
       incorrect_previous_letter: false,

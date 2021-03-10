@@ -3,8 +3,9 @@ import Router from 'vue-router'
 import Accueil from '@/components/accueil'
 import KeyExercise from '@/components/key_exercise'
 import LetterExercise from '@/components/letter_exercise'
-import WordExercise from '@/components/word_exercise'
-import LongWordExercise from '@/components/long_word_exercise'
+import BothHandsWordExercise from '@/components/both_hands_word_exercise'
+import LeftHandWordExercise from '@/components/left_hand_word_exercise'
+import RightHandWordExercise from '@/components/right_hand_word_exercise'
 import AccentExercise from '@/components/accent_exercise'
 import SentenceExercise from '@/components/sentence_exercise'
 import PunctuationExercise from '@/components/punctuation_exercise'
@@ -37,12 +38,17 @@ export default new Router({
     {
       path: '/word_exercise',
       name: 'word_exercise',
-      component: WordExercise
+      component: BothHandsWordExercise
     },
     {
-      path: '/long_word_exercise',
-      name: 'long_word_exercise',
-      component: LongWordExercise
+      path: '/left_hand_word_exercise',
+      name: 'left_hand_word_exercise',
+      component: LeftHandWordExercise
+    },
+    {
+      path: '/right_hand_word_exercise',
+      name: 'right_hand_word_exercise',
+      component: RightHandWordExercise
     },
     {
       path: '/accent_exercise',

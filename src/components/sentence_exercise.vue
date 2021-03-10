@@ -41,7 +41,7 @@
       </div>
     </template>
   </b-card>
-  <b-button class="home-button" pill variant="primary" @click.prevent="backHome">Retour au menu principal</b-button>
+  <b-button class="home-button" pill variant="primary" @click.prevent="$router.push('/')">Retour au menu principal</b-button>
 </div>
 </template>
 
@@ -52,6 +52,8 @@ import wordMixin from '../mixins/wordMixin'
 import watchMixin from '../mixins/watchMixin'
 import exercisesMixin from '../mixins/exercisesMixin'
 
+const data = require('../data/exercises_content.json')
+
 export default {
   mixins: [speakMixin, wordMixin, watchMixin, exercisesMixin],
   data () {
@@ -61,7 +63,7 @@ export default {
       letters: [],
       current: '',
       value: '',
-      words: ['Il fait beau aujourd\'hui.', 'Attention, cette fenêtre est cassée !', 'Il n\'a jamais aimé les mathématiques.', 'As-tu eu le temps de passer au garage ?'],
+      words: data.sentences,
       attempts: 0, // nb total d'essais
       error: false,
       success: false,

@@ -70,6 +70,8 @@ import keyMixin from '../mixins/keyMixin'
 import watchMixin from '../mixins/watchMixin'
 import exercisesMixin from '../mixins/exercisesMixin'
 
+const data = require('../data/exercises_content.json')
+
 export default {
   mixins: [speakMixin, keyMixin, watchMixin, exercisesMixin],
   data() {
@@ -77,40 +79,7 @@ export default {
       consigne: 'Appuie sur les touches suivnates :',
       key: "",
       value: "",
-      keys: [
-        {
-          keyCode: 18,
-          name: "Alt gauche",
-        },
-        {
-          keyCode: 16,
-          name: "Maj gauche",
-        },
-        {
-          keyCode: 13,
-          name: "Entrée",
-        },
-        {
-          keyCode: 17,
-          name: "Control",
-        },
-        {
-          keyCode: 27,
-          name: "Echap",
-        },
-        {
-          keyCode: 32,
-          name: "Espace",
-        },
-        {
-          keyCode: 8,
-          name: "Retour arrière",
-        },
-        {
-          keyCode: 225,
-          name: "Alt Gr",
-        }
-      ],
+      keys: data.keys,
       attempts: 0, // nb total d'essais
       error: false,
       success: false,
