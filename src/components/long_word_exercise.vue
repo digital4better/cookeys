@@ -41,17 +41,18 @@
       </div>
     </template>
   </b-card>
-  <b-button class="home-button" pill variant="primary" @click.prevent="backHome">Retour au menu principal</b-button>
+  <b-button class="home-button" pill variant="primary" @click.prevent="$router.push('/')">Retour au menu principal</b-button>
 </div>
 </template>
 
 <script>
-import Clock from './clock.vue'
 
-var synth = window.speechSynthesis
+import speakMixin from '../mixins/speakMixin'
+import wordMixin from '../mixins/wordMixin'
+import watchMixin from '../mixins/watchMixin'
 
 export default {
-  components: { Clock },
+  mixins: [speakMixin, wordMixin, watchMixin],
   data () {
     return {
       consigne: 'Saisis le mot :',
@@ -68,127 +69,6 @@ export default {
       totalErrors: 0, // nb d'erreur total
       score: 0 // pourcentage de réussite
     }
-  },
-  mounted: function () {
-    this.speak(this.consigne)
-    this.changeWord()
-    this.startWatch()
-  },
-  computed: {
-    hasMadeErrors () {
-      return (this.wordErrors > 1)
-    },
-    hasMadeOneError () {
-      return (this.wordErrors === 1)
-    },
-    isEnd () {
-      return (this.words.length === 0 && this.success === true)
-    }
-  },
-  methods: {
-    startWatch () {
-      this.$refs.clock.start()
-    },
-    stopWatch () {
-      this.$refs.clock.stop()
-    },
-    resetWatch () {
-      this.$refs.clock.reset()
-    },
-    checkWord (e) {
-      // choix a demander à bernadette : je laisse orca dire les touches, je ne les dit pas avec l'application
-      // this.speak(e.key)
-      this.attempts++
-      for (var i = 0; i < this.letters.length; i++) {
-        this.letters[i].current = false
-      }
-      if (this.value === '') this.letters[0].current = true
-      for (var i = 0; i < this.value.length; i++) {
-        if (this.value[i] === this.letters[i].name) {
-          this.letters[i].current = false
-          if (i !== this.word.length - 1) {
-            this.letters[i+1].current = true
-          }
-        } else {
-          this.error = true
-          if (this.incorrect_previous_letter) return
-          this.incorrect_previous_letter = true
-          this.wordErrors++
-          this.totalErrors++
-          return
-        } 
-      }
-      if (this.value === this.word) {
-        this.error = false
-        this.success = true
-        e.target.value = ''
-        this.value = e.target.value
-        if (this.words.length !== 0) {
-          this.changeWord(e)
-        } else {
-          this.stopWatch()
-        }
-      }
-      this.incorrect_previous_letter = false
-      this.score = (((this.attempts - this.totalErrors) / this.attempts) * 100).toFixed(0)
-    },
-    spell () {
-      for (var i = 0; i < this.word.length; i++) {
-        this.letters.push({
-          name: this.word.charAt(i),
-          current: false
-        })
-      }
-      this.letters[0].current = true
-    },
-    changeWord (e) {
-      this.wordErrors = 0
-      this.letters = []
-      if (this.words.length > 0) {
-        this.word = this.words.shift()
-        this.spell()
-      }
-      this.success = false
-      this.error = false
-      var consigne = this.word + '.'
-      for (var i = 0; i < this.letters.length; i++) {
-        consigne += this.letters[i].name + '.'
-      }
-      this.speak(consigne)
-    },
-    speak (oral) {
-      if (synth.speaking) {
-        synth.cancel()
-      }
-      if (oral !== '' && oral !== null) {
-        const utterThis = new SpeechSynthesisUtterance(oral)
-
-        utterThis.onend = function (event) {
-          console.log('SpeechSynthesisUtterance.onend')
-        }
-        utterThis.onerror = function (event) {
-          console.error('SpeechSynthesisUtterance.onerror')
-        }
-        utterThis.voice = this.$store.state.voice
-        utterThis.pitch = this.$store.state.pitch
-        utterThis.rate = this.$store.state.rate
-        synth.speak(utterThis)
-      }
-    },
-    backHome () {
-      this.$router.push('/')
-    }
-  },
-  directives: {
-    focus: {
-      inserted: function (el) {
-        el.focus()
-      }
-    }
-  },
-  beforeRouteLeave (to, from , next) {
-    this.resetWatch()
-    next()
   }
 }
 </script>

@@ -44,12 +44,12 @@
 </template>
 
 <script>
-import Clock from './clock.vue'
-
-var synth = window.speechSynthesis
+import speakMixin from '../mixins/speakMixin'
+import letterMixin from '../mixins/letterMixin'
+import watchMixin from '../mixins/watchMixin'
 
 export default {
-  components: { Clock },
+  mixins: [speakMixin, letterMixin, watchMixin],
   data () {
     return {
       consigne: 'Saisis la lettre :',
@@ -63,101 +63,6 @@ export default {
       totalErrors: 0, // nb d'erreur total
       score: 0 // pourcentage de réussite
     }
-  },
-  mounted: function () {
-    this.speak(this.consigne)
-    this.startWatch()
-    this.initLetter()
-  },
-  computed: {
-    hasMadeErrors () {
-      return (this.letterErrors > 1)
-    },
-    hasMadeOneError () {
-      return (this.letterErrors === 1)
-    },
-    isEnd () {
-      return (this.letters.length === 0 && this.success === true)
-    }
-  },
-  methods: {
-    startWatch () {
-      this.$refs.clock.start()
-    },
-    stopWatch () {
-      this.$refs.clock.stop()
-    },
-    resetWatch() {
-      this.$refs.clock.reset()
-    },
-    checkLetter (e) {
-      this.attempts++
-      if (this.value !== this.letter) {
-        this.error = true
-        e.target.value = ''
-        this.letterErrors++
-        this.totalErrors++
-      } else {
-        this.error = false
-        this.success = true
-        if (this.letters.length !== 0) {
-          this.changeLetter(e)
-        } else {
-          this.stopWatch()
-        }
-      }
-      this.value = e.target.value
-      this.score = (((this.attempts - this.totalErrors) / this.attempts) * 100).toFixed(0)
-    },
-    initLetter () {
-      if (this.letters.length > 0) {
-        this.letter = this.letters.shift()
-      }
-      setTimeout(() => this.speak(this.letter), 1500)
-    },
-    changeLetter (e) {
-      this.letterErrors = 0
-      e.target.value = ''
-      this.value = ''
-      if (this.letters.length > 0) {
-        this.letter = this.letters.shift()
-        setTimeout(() => this.speak(this.letter), 600)
-      }
-      this.success = false
-      this.error = false
-    },
-    speak (oral) {
-      if (synth.speaking) {
-        synth.cancel()
-      }
-      if (oral !== '') {
-        const utterThis = new SpeechSynthesisUtterance(oral)
-        utterThis.onend = function (event) {
-          console.log('SpeechSynthesisUtterance.onend')
-        }
-        utterThis.onerror = function (event) {
-          console.error('SpeechSynthesisUtterance.onerror')
-        }
-        utterThis.voice = this.$store.state.voice
-        utterThis.pitch = this.$store.state.pitch
-        utterThis.rate = this.$store.state.rate
-        synth.speak(utterThis)
-      }
-    },
-    backHome () {
-      this.$router.push('/')
-    }
-  },
-  directives: {
-    focus: {
-      inserted: function (el) {
-        el.focus()
-      }
-    }
-  },
-  beforeRouteLeave (to, from , next) {
-    this.resetWatch()
-    next()
   }
 }
 </script>
