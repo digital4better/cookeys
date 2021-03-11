@@ -48,6 +48,7 @@ export default {
         if (this.letters.length !== 0) {
           this.changeLetter(e)
         } else {
+          this.congrat()
           this.stopWatch()
         }
       }

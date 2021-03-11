@@ -27,10 +27,10 @@
           class="input"
           type="text"
           v-model="value"
-          @input="checkKey"
+          @keydown="checkKey"
           :disabled="success"
           v-focus
-        />
+/>
       </div>
       <div>
         <p v-if="error" class="is-error">

@@ -15,7 +15,9 @@
         <section class="keys">
           <h3 class="list-title">Repérer les touches</h3>
           <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('key_exercise')">Exercice 1 : Les touches essentielles</b-button>
+          <br>
           <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('letter_exercise')">Exercice 2 : Les lettres</b-button>
+          <br>
           <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('punctuation_exercise')">Exercice 3 : La ponctuation</b-button>
         </section>
         <section class="words">
@@ -23,6 +25,7 @@
           <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('right_hand_word_exercise')">Exercice 4 : Se servir de la main droite</b-button>
           <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('left_hand_word_exercise')">Exercice 5 : Se servir de la main gauche</b-button>
           <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('both_hands_word_exercise')">Exercice 6 : Se servir des deux mains</b-button>
+          <br>
           <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('punctuation_word_exercise')">Exercice 7 : Les mots et la ponctuation</b-button>
           <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('accent_word_exercise')">Exercice 8 : Les mots avec accents</b-button>
           <b-button class="button btn-lg btn-block" pill variant="dark" @click.prevent="$router.push('capital_letters_accent_word_exercise')">Exercice 9 : Les mots avec accents et majuscules</b-button>

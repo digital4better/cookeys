@@ -22,7 +22,7 @@ export default {
       this.attempts++
       if (e.keyCode !== this.key.keyCode) {
         this.error = true
-        e.target.value = ""
+        e.target.value = ''
         this.keyErrors++
         this.totalErrors++
       } else {
@@ -31,6 +31,7 @@ export default {
         if (this.keys.length !== 0) {
           this.changeKey(e)
         } else {
+          this.congrat()
           this.stopWatch()
         }
       }
@@ -47,8 +48,8 @@ export default {
     },
     changeKey(e) {
       this.keyErrors = 0
-      e.target.value = ""
-      this.value = ""
+      e.target.value = ''
+      this.value = ''
       if (this.keys.length > 0) {
         this.key = this.keys.shift()
         setTimeout(() => this.speak(this.key.name), 600)

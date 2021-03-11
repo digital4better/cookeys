@@ -52,6 +52,7 @@ export default {
         if (this.words.length !== 0) {
           this.changeWord()
         } else {
+          this.congrat()
           this.stopWatch()
         }
       }
@@ -76,7 +77,8 @@ export default {
       }
       this.success = false
       this.error = false
-      this.speak(this.word + '.')
+      setTimeout(() => this.speak(this.word), 3500)
+      setTimeout(() => this.speak(this.letters[0].name), 5000)
     }
   }
 }

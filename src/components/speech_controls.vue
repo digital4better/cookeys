@@ -95,7 +95,7 @@ export default {
       }
     },
     speakDelayed (oral) {
-      setTimeout(() => this.speak(oral), 3000)
+      setTimeout(() => this.speak(oral), 1500)
     },
     store () {
       this.$store.commit('updatePitch', this.pitch)

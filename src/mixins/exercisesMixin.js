@@ -15,6 +15,9 @@ export default {
       Object.keys(require.cache).forEach(function(key) {
         delete require.cache[key]
       })
+    },
+    congrat () {
+      this.speak('Bravo, l\'exercice est terminé !')
     }
   }
 }
