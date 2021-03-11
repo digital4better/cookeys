@@ -1,5 +1,6 @@
 export default {
   mounted: function () {
+    this.initContent()
     this.speak(this.consigne)
     this.startWatch()
     this.initLetter()

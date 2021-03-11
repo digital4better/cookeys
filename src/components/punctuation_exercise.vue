@@ -57,7 +57,7 @@ export default {
       consigne: 'Saisis les caractères suivants :',
       letter: '',
       value: '',
-      letters: data.punctuation,
+      letters: [],
       attempts: 0, // nb total d'essais
       error: false,
       success: false,
@@ -65,10 +65,17 @@ export default {
       totalErrors: 0, // nb d'erreur total
       score: 0 // pourcentage de réussite
     }
+  },
+  methods: {
+    initContent () {
+      this.clearRequireCache()
+      const data = require('../data/exercises_content.json')
+      this.letters = data.punctuation
+    }
   }
 }
 </script>
-<style>
+<style scoped>
 .errors-count {
 text-align: left;
 }

@@ -50,8 +50,6 @@ import letterMixin from '../mixins/letterMixin'
 import watchMixin from '../mixins/watchMixin'
 import exercisesMixin from '../mixins/exercisesMixin'
 
-const data = require('../data/exercises_content.json')
-
 export default {
   mixins: [speakMixin, letterMixin, watchMixin, exercisesMixin],
   data () {
@@ -59,13 +57,20 @@ export default {
       consigne: 'Saisis les lettres suivantes :',
       letter: '',
       value: '',
-      letters: data.letters,
+      letters: [],
       attempts: 0, // nb total d'essais
       error: false,
       success: false,
       letterErrors: 0, // nb d'erreur par lettre
       totalErrors: 0, // nb d'erreur total
       score: 0 // pourcentage de réussite
+    }
+  },
+  methods: {
+    initContent () {
+      this.clearRequireCache()
+      const data = require('../data/exercises_content.json')
+      this.letters = data.letters
     }
   }
 }

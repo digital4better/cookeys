@@ -1,5 +1,6 @@
 export default {
   mounted: function () {
+    this.initContent()
     this.speak(this.consigne)
     this.changeWord()
     this.startWatch()
@@ -49,7 +50,7 @@ export default {
         e.target.value = ''
         this.value = e.target.value
         if (this.words.length !== 0) {
-          this.changeWord(e)
+          this.changeWord()
         } else {
           this.stopWatch()
         }
@@ -66,7 +67,7 @@ export default {
       }
       this.letters[0].current = true
     },
-    changeWord (e) {
+    changeWord () {
       this.wordErrors = 0
       this.letters = []
       if (this.words.length > 0) {
@@ -75,11 +76,7 @@ export default {
       }
       this.success = false
       this.error = false
-      var consigne = this.word + '.'
-      /* for (var i = 0; i < this.letters.length; i++) {
-        consigne += this.letters[i].name + '.'
-      } */
-      this.speak(consigne)
+      this.speak(this.word + '.')
     }
   }
 }

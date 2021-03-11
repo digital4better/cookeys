@@ -11,8 +11,7 @@
     header="Exercice 1"
     footer-tag="footer"
     title="Appuie sur les touches suivantes :"
-    style="font-family: 'Tiresias Infofont', arial"
-  >
+    style="font-family: 'Tiresias Infofont', arial">
     <link
       href="https://fr.allfont.net/allfont.css?fonts=tiresias-infofont"
       rel="stylesheet"
@@ -70,8 +69,6 @@ import keyMixin from '../mixins/keyMixin'
 import watchMixin from '../mixins/watchMixin'
 import exercisesMixin from '../mixins/exercisesMixin'
 
-const data = require('../data/exercises_content.json')
-
 export default {
   mixins: [speakMixin, keyMixin, watchMixin, exercisesMixin],
   data() {
@@ -79,7 +76,7 @@ export default {
       consigne: 'Appuie sur les touches suivnates :',
       key: "",
       value: "",
-      keys: data.keys,
+      keys: [],
       attempts: 0, // nb total d'essais
       error: false,
       success: false,
@@ -87,11 +84,18 @@ export default {
       totalErrors: 0, // nb d'erreur total
       score: 0, // pourcentage de réussite
     }
+  },
+  methods: {
+    initContent () {
+      this.clearRequireCache()
+      const data = require('../data/exercises_content.json')
+      this.keys = data.keys
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .errors-count {
   text-align: left;
 }
@@ -113,10 +117,10 @@ export default {
   background: rgba(0, 0, 0, 0.003);
 }
 
-.input {
-  visibility: aria-hidden;
-  font-size: 80px;
-  margin: 16px 16px 16px 0px;
+.input{
+visibility: aria-hidden;
+font-size: 80px;
+margin: 16px 16px 16px 0px
 }
 
 .home-button{

@@ -39,8 +39,8 @@ export default new Router({
       component: LetterExercise
     },
     {
-      path: '/word_exercise',
-      name: 'word_exercise',
+      path: '/both_hands_word_exercise',
+      name: 'both_hands_word_exercise',
       component: BothHandsWordExercise
     },
     {

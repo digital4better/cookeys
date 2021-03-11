@@ -52,8 +52,6 @@ import wordMixin from '../mixins/wordMixin'
 import watchMixin from '../mixins/watchMixin'
 import exercisesMixin from '../mixins/exercisesMixin'
 
-const data = require('../data/exercises_content.json')
-
 export default {
   mixins: [speakMixin, wordMixin, watchMixin, exercisesMixin],
   data () {
@@ -63,20 +61,27 @@ export default {
       letters: [],
       current: '',
       value: '',
-      words: data.sentences,
+      words: [],
       attempts: 0, // nb total d'essais
       error: false,
       success: false,
-           incorrect_previous_letter: false,
+      incorrect_previous_letter: false,
       wordErrors: 0, // nb d'erreur par lettre
       totalErrors: 0, // nb d'erreur total
       score: 0 // pourcentage de réussite
+    }
+  },
+  methods: {
+    initContent () {
+      this.clearRequireCache()
+      const data = require('../data/exercises_content.json')
+      this.words = data.sentences
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 
 .errors-count {
 text-align: left;

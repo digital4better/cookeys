@@ -63,7 +63,7 @@
     "z"
   ],
 
-  "left-hand-words": [
+  "left_hand_words": [
     "poil",
     "moi",
     "loi",
@@ -83,7 +83,7 @@
     "poilu",
     "joui"
   ],
-  "right-hand-words": [
+  "right_hand_words": [
     "erdre",
     "art",
     "rat",
@@ -123,7 +123,7 @@
     "zeste",
     "gazer"
   ],
-  "both-hand-words": [
+  "both_hands_words": [
     "polis",
     "moins",
     "lois",
@@ -187,7 +187,7 @@
     "quolibet",
     "querelle"
   ],
-  "special-characters-words": [
+  "special_characters_words": [
     "s'appuyer",
     "(parenthèse)",
     "[crochet]",
@@ -195,7 +195,7 @@
     "\"guillemets\"",
     "abat-jour"
   ],
-  "accents-words": [
+  "accents_words": [
     "mère",
     "père",
     "rêve",
@@ -235,7 +235,7 @@
     "au-delà",
     "à-côté"
   ],
-  "capital-letters-accents-words": [
+  "capital_letters_accents_words": [
     "Mère",
     "Père",
     "Rêve",
@@ -282,7 +282,7 @@
     "?",
     "'"
   ],
-  "punctuation-words": [
+  "punctuation_words": [
     "polis.",
     "moins,",
     "lois !",
