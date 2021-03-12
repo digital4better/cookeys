@@ -2,7 +2,7 @@ export default {
   mounted: function () {
     this.initContent()
     this.speak(this.consigne)
-    this.changeWord()
+    this.initWord()
     this.startWatch()
   },
   computed: {
@@ -69,6 +69,18 @@ export default {
       this.letters[0].current = true
     },
     changeWord () {
+      this.wordErrors = 0
+      this.letters = []
+      if (this.words.length > 0) {
+        this.word = this.words.shift()
+        this.spell()
+      }
+      this.success = false
+      this.error = false
+      setTimeout(() => this.speak(this.word), 1000)
+      setTimeout(() => this.speak(this.letters[0].name), 2000)
+    },
+    initWord () {
       this.wordErrors = 0
       this.letters = []
       if (this.words.length > 0) {

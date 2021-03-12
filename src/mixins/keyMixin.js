@@ -44,7 +44,7 @@ export default {
       if (this.keys.length > 0) {
         this.key = this.keys.shift()
       }
-      this.speak(this.key.name)
+      setTimeout(() => this.speak(this.key.name), 4000)
     },
     changeKey(e) {
       this.keyErrors = 0

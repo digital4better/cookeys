@@ -27,6 +27,7 @@
           class="input"
           type="text"
           v-model="value"
+          @change="stopSpeech"
           @keydown="checkKey"
           :disabled="success"
           v-focus
@@ -73,7 +74,7 @@ export default {
   mixins: [speakMixin, keyMixin, watchMixin, exercisesMixin],
   data() {
     return {
-      consigne: 'Appuie sur les touches suivnates :',
+      consigne: 'Appuie sur les touches suivantes :',
       key: "",
       value: "",
       keys: [],

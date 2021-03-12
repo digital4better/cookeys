@@ -21,7 +21,7 @@ export default {
       if (this.letters.length > 0) {
         this.letter = this.letters.shift()
       }
-      setTimeout(() => this.speak(this.letter), 1500)
+      setTimeout(() => this.speak(this.letter), 3000)
     },
     changeLetter (e) {
       this.letterErrors = 0
@@ -39,7 +39,9 @@ export default {
       this.attempts++
       if (this.value !== this.letter) {
         this.error = true
+        console.log(e.target.value)
         e.target.value = ''
+        console.log(e.target.value)
         this.letterErrors++
         this.totalErrors++
       } else {

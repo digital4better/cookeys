@@ -24,7 +24,7 @@ export default {
       synth.cancel()
     },
     speakDelayed (oral) {
-      setTimeout(() => this.speak(oral), 600)
+      setTimeout(() => this.speak(oral), 1100)
     }
   }
 }

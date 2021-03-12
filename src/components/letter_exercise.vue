@@ -16,7 +16,7 @@
 
     <section class=body>
       <div><span class="letter"> {{ letter }}</span></div>
-      <div><input class="input" type="text" v-model="value" @keydown="checkLetter" :disabled="success" v-focus></div>
+      <div><input class="input" type="text" v-model="value" @input="checkLetter" @change="stopSpeech" :disabled="success" v-focus></div>
       <div>
         <p v-if="error" class="is-error">Oups, tu t'es trompé(e) de lettre, réessaie !</p>
       </div>

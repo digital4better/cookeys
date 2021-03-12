@@ -17,7 +17,7 @@ export default {
       })
     },
     congrat () {
-      this.speak('Bravo, l\'exercice est terminé !')
+      setTimeout(() => this.speak('Bravo, l\'exercice est terminé !'), 900)
     }
   }
 }
