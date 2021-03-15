@@ -23,11 +23,11 @@ export default {
         this.letters[i].current = false
       }
       if (this.value === '') this.letters[0].current = true
-      for (var i = 0; i < this.value.length; i++) {
+      for (i = 0; i < this.value.length; i++) {
         if (this.value[i] === this.letters[i].name) {
           this.letters[i].current = false
           if (i !== this.word.length - 1) {
-            this.letters[i+1].current = true
+            this.letters[i + 1].current = true
           }
         } else {
           this.error = true
@@ -36,9 +36,9 @@ export default {
           this.wordErrors++
           this.totalErrors++
           return
-        } 
+        }
       }
-      for (var i = 0; i < this.letters.length; i++) {
+      for (i = 0; i < this.letters.length; i++) {
         if (this.letters[i].current) {
           if (this.letters[i].name === ' ') this.speakDelayed('Espace')
           else this.speakDelayed(this.letters[i].name)

@@ -16,7 +16,7 @@
 
     <section class=body>
       <section class="word">
-        <span class="letter" v-for="letter in letters" :class="{current: letter.current}">{{letter.name}}</span>
+        <span class="letter" v-for="letter in letters" v-bind:key="letter.name" :class="{current: letter.current}">{{letter.name}}</span>
       </section>
       <div><input class="input" type="text" v-model="value" @change="stopSpeech" @input="checkWord" :disabled="success" v-focus></div>
       <div>

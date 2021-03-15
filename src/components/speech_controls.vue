@@ -4,7 +4,6 @@
       <h1>Réglages</h1>
       <p>Vous pouvez régler la vitesse d'élocution, la hauteur et la langue de la voix dans l'application.</p>
       <p>Vous aurez un aperçu du rendu de la voix en appuyant sur le bouton Test.</p>
-      </p>
       <label id="rate">Vitesse d'élocution</label><input type="range" min="0.5" max="2" value="1" step="0.1" v-model="rate" @focus="speakDelayed('Vitesse d\'élocution :' + rate)" id="rate">
       <div class="rate-value">{{ rate }}</div>
     </div>
@@ -48,7 +47,7 @@ export default {
     this.speak('Vous pouvez régler la vitesse d\'élocution, la hauteur et la langue de la voix dans l\'application. Vous aurez un aperçu du rendu de la voix en appuyant sur le bouton Test.')
   },
   watch: {
-    $route (to, from){
+    $route (to, from) {
       synth.cancel()
     }
   },
@@ -73,7 +72,7 @@ export default {
       if (synth.speaking) {
         synth.cancel()
       }
-      if (oral != ''){
+      if (oral !== '') {
         var utterThis = new SpeechSynthesisUtterance(oral)
         utterThis.onend = function (event) {
           console.log('SpeechSynthesisUtterance.onend')

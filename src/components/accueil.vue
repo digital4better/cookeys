@@ -44,7 +44,7 @@
 import SpeechControls from './speech_controls.vue'
 
 export default {
-  components: { SpeechControls },
+  components: { SpeechControls }
 }
 </script>
 

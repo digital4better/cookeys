@@ -67,7 +67,7 @@ export default new Router({
       path: '/capital_letters_accent_word_exercise',
       name: 'capital_letters_accent_word_exercise',
       component: CapitalLettersAccentWordExercise
-    },    
+    },
     {
       path: '/punctuation_exercise',
       name: 'punctuation_exercise',

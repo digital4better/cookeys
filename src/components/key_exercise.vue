@@ -72,18 +72,18 @@ import exercisesMixin from '../mixins/exercisesMixin'
 
 export default {
   mixins: [speakMixin, keyMixin, watchMixin, exercisesMixin],
-  data() {
+  data () {
     return {
       consigne: 'Appuie sur les touches suivantes :',
-      key: "",
-      value: "",
+      key: '',
+      value: '',
       keys: [],
       attempts: 0, // nb total d'essais
       error: false,
       success: false,
       keyErrors: 0, // nb d'erreur par lettre
       totalErrors: 0, // nb d'erreur total
-      score: 0, // pourcentage de réussite
+      score: 0 // pourcentage de réussite
     }
   },
   methods: {

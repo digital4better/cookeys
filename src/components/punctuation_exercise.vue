@@ -52,7 +52,7 @@ import exercisesMixin from '../mixins/exercisesMixin'
 
 export default {
   mixins: [speakMixin, letterMixin, watchMixin, exercisesMixin],
-  data() {
+  data () {
     return {
       consigne: 'Saisis les caractères suivants :',
       letter: '',

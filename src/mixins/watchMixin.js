@@ -9,7 +9,7 @@ export default {
     stopWatch () {
       this.$refs.clock.stop()
     },
-    resetWatch() {
+    resetWatch () {
       this.$refs.clock.reset()
     }
   }

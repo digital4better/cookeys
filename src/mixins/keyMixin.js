@@ -6,18 +6,18 @@ export default {
     this.startWatch()
   },
   computed: {
-    hasMadeErrors() {
+    hasMadeErrors () {
       return this.keyErrors > 1
     },
-    hasMadeOneError() {
+    hasMadeOneError () {
       return this.keyErrors === 1
     },
-    isEnd() {
+    isEnd () {
       return this.keys.length === 0 && this.success === true
-    },
+    }
   },
   methods: {
-    checkKey(e) {
+    checkKey (e) {
       console.log(e)
       this.attempts++
       if (e.keyCode !== this.key.keyCode) {
@@ -38,7 +38,7 @@ export default {
       this.value = e.target.value
       this.score = (((this.attempts - this.totalErrors) / this.attempts) * 100).toFixed(0)
     },
-    initKey() {
+    initKey () {
       this.success = false
       this.error = false
       if (this.keys.length > 0) {
@@ -46,7 +46,7 @@ export default {
       }
       setTimeout(() => this.speak(this.key.name), 4000)
     },
-    changeKey(e) {
+    changeKey (e) {
       this.keyErrors = 0
       e.target.value = ''
       this.value = ''
