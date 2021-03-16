@@ -65,10 +65,10 @@
 
 <script>
 
-import speakMixin from '../mixins/speakMixin'
-import keyMixin from '../mixins/keyMixin'
-import watchMixin from '../mixins/watchMixin'
-import exercisesMixin from '../mixins/exercisesMixin'
+import speakMixin from '@/mixins/speakMixin'
+import keyMixin from '@/mixins/keyMixin'
+import watchMixin from '@/mixins/watchMixin'
+import exercisesMixin from '@/mixins/exercisesMixin'
 
 export default {
   mixins: [speakMixin, keyMixin, watchMixin, exercisesMixin],
@@ -88,9 +88,8 @@ export default {
   },
   methods: {
     initContent () {
-      this.clearRequireCache()
-      const data = require('../data/exercises_content.json')
-      this.keys = data.keys
+      const data = this.$store.state.data
+      this.keys = [...data.keys]
     }
   }
 }

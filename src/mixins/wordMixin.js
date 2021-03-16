@@ -1,11 +1,28 @@
+
 export default {
-  mounted: function () {
-    this.initContent()
+  data () {
+    return {
+      consigne: 'Saisis les mots suivants :',
+      word: '',
+      cursor: 0,
+      value: '',
+      previousValue: '',
+      attempts: 0, // nb total d'essais
+      error: false,
+      success: false,
+      wordErrors: 0, // nb d'erreur par lettre
+      totalErrors: 0 // nb d'erreur total
+    }
+  },
+  created () {
     this.speak(this.consigne)
     this.initWord()
     this.startWatch()
   },
   computed: {
+    letters () {
+      return this.word.split('')
+    },
     hasMadeErrors () {
       return (this.wordErrors > 1)
     },
@@ -14,41 +31,34 @@ export default {
     },
     isEnd () {
       return (this.words.length === 0 && this.success === true)
+    },
+    score () {
+      return (((this.attempts - this.totalErrors) / this.attempts) * 100).toFixed(0)
     }
   },
   methods: {
     checkWord (e) {
+      if (this.cursor > this.value.length) {
+        this.value = this.previousValue
+        return
+      }
       this.attempts++
-      for (var i = 0; i < this.letters.length; i++) {
-        this.letters[i].current = false
+      const currentLetter = this.word[this.cursor]
+      if (this.value[this.cursor] === currentLetter) {
+        this.cursor++
+        this.previousValue = this.value
+      } else {
+        this.value = this.previousValue
+        this.error = true
+        this.wordErrors++
+        this.totalErrors++
       }
-      if (this.value === '') this.letters[0].current = true
-      for (i = 0; i < this.value.length; i++) {
-        if (this.value[i] === this.letters[i].name) {
-          this.letters[i].current = false
-          if (i !== this.word.length - 1) {
-            this.letters[i + 1].current = true
-          }
-        } else {
-          this.error = true
-          if (this.incorrect_previous_letter) return
-          this.incorrect_previous_letter = true
-          this.wordErrors++
-          this.totalErrors++
-          return
-        }
-      }
-      for (i = 0; i < this.letters.length; i++) {
-        if (this.letters[i].current) {
-          if (this.letters[i].name === ' ') this.speakDelayed('Espace')
-          else this.speakDelayed(this.letters[i].name)
-        }
-      }
+      if (currentLetter === ' ') this.speakDelayed('Espace')
+      else this.speakDelayed(currentLetter)
+
       if (this.value === this.word) {
         this.error = false
         this.success = true
-        e.target.value = ''
-        this.value = e.target.value
         if (this.words.length !== 0) {
           this.changeWord()
         } else {
@@ -56,41 +66,26 @@ export default {
           this.stopWatch()
         }
       }
-      this.incorrect_previous_letter = false
-      this.score = (((this.attempts - this.totalErrors) / this.attempts) * 100).toFixed(0)
-    },
-    spell () {
-      for (var i = 0; i < this.word.length; i++) {
-        this.letters.push({
-          name: this.word.charAt(i),
-          current: false
-        })
-      }
-      this.letters[0].current = true
     },
     changeWord () {
-      this.wordErrors = 0
-      this.letters = []
-      if (this.words.length > 0) {
-        this.word = this.words.shift()
-        this.spell()
-      }
-      this.success = false
-      this.error = false
+      this.nextWord()
       setTimeout(() => this.speak(this.word), 1000)
-      setTimeout(() => this.speak(this.letters[0].name), 2000)
+      setTimeout(() => this.speak(this.word[0]), 2000)
     },
     initWord () {
+      this.nextWord()
+      setTimeout(() => this.speak(this.word), 3500)
+      setTimeout(() => this.speak(this.word[0]), 5000)
+    },
+    nextWord () {
       this.wordErrors = 0
-      this.letters = []
       if (this.words.length > 0) {
         this.word = this.words.shift()
-        this.spell()
       }
       this.success = false
       this.error = false
-      setTimeout(() => this.speak(this.word), 3500)
-      setTimeout(() => this.speak(this.letters[0].name), 5000)
+      this.cursor = 0
+      this.previousValue = this.value = ''
     }
   }
 }

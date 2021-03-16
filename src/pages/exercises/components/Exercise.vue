@@ -7,7 +7,7 @@
     footer-text-variant="white"
     footer-bg-variant="dark"
     text-variant="black"
-    header="Exercice 7"
+    :header="name"
     footer-tag="footer"
     title="Saisis les mots suivants :"
     style="font-family: 'Tiresias Infofont', arial">
@@ -16,7 +16,7 @@
 
     <section class=body>
       <section class="word">
-        <span class="letter" v-for="letter in letters" :key="letter.id" :class="{current: letter.current}">{{letter.name}}</span>
+        <span class="letter" v-for="(letter, index) in letters" :key="letter.id" :class="{current: cursor === index}">{{letter}}</span>
       </section>
       <div><input class="input" type="text" v-model="value" @change="stopSpeech" @input="checkWord" :disabled="success" v-focus></div>
       <div>
@@ -46,38 +46,23 @@
 </template>
 
 <script>
-
-import speakMixin from '../mixins/speakMixin'
-import wordMixin from '../mixins/wordMixin'
-import watchMixin from '../mixins/watchMixin'
-import exercisesMixin from '../mixins/exercisesMixin'
+import speakMixin from '../../../mixins/speakMixin'
+import wordMixin from '../../../mixins/wordMixin'
+import watchMixin from '../../../mixins/watchMixin'
+import exercisesMixin from '../../../mixins/exercisesMixin'
 
 export default {
-  mixins: [speakMixin, wordMixin, watchMixin, exercisesMixin],
-  data () {
-    return {
-      consigne: 'Saisis les mots suivants :',
-      word: '',
-      letters: [],
-      current: '',
-      value: '',
-      words: [],
-      attempts: 0, // nb total d'essais
-      error: false,
-      incorrect_previous_letter: false,
-      success: false,
-      wordErrors: 0, // nb d'erreur par lettre
-      totalErrors: 0, // nb d'erreur total
-      score: 0 // pourcentage de réussite
+  props: {
+    words: {
+      type: Array,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
     }
   },
-  methods: {
-    initContent () {
-      this.clearRequireCache()
-      const data = require('../data/exercises_content.json')
-      this.words = data.accents_words
-    }
-  }
+  mixins: [speakMixin, wordMixin, watchMixin, exercisesMixin]
 }
 </script>
 
@@ -110,9 +95,9 @@ white-space: nowrap;
 }
 
 .input{
-visibility: aria-hidden;
-font-size: 80px;
-margin: 16px 16px 16px 0px
+  visibility: aria-hidden;
+  font-size: 80px;
+  margin: 16px 16px 16px 0px
 }
 
 .home-button{
