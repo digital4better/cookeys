@@ -6,9 +6,13 @@ export default new Vuex.Store({
   state: {
     pitch: 1,
     rate: 1,
-    voice: null
+    voice: null,
+    data: {}
   },
   mutations: {
+    loadData (state) {
+      state.data = require('@/data/exercises_content.json')
+    },
     updatePitch (state, p) {
       state.pitch = p
     },

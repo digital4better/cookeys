@@ -1,47 +1,59 @@
 <template>
   <form id=form @submit.prevent>
     <div>
-      <h1>Réglages de lecture orale</h1>
-      <label id="rate">Rate</label><input type="range" min="0.5" max="2" value="1" step="0.1" v-model="rate" id="rate">
+      <h1>Réglages</h1>
+      <p>Vous pouvez régler la vitesse d'élocution, la hauteur et la langue de la voix dans l'application.</p>
+      <p>Vous aurez un aperçu du rendu de la voix en appuyant sur le bouton Test.</p>
+      <label id="rate">Vitesse d'élocution</label><input type="range" min="0.5" max="2" value="1" step="0.1" v-model="rate" @focus="speakDelayed('Vitesse d\'élocution :' + rate)" id="rate">
       <div class="rate-value">{{ rate }}</div>
-      <div class="clearfix"></div>
     </div>
     <div>
-      <label id="pitch">Pitch</label><input type="range" min="0" max="2" value="1" step="0.1" v-model="pitch" id="pitch">
+      <label id="pitch">Hauteur</label><input type="range" min="0" max="2" value="1" step="0.1" v-model="pitch" @focus="speakDelayed('Hauteur :' + pitch)" id="pitch">
       <div class="pitch-value">{{ pitch }}</div>
       <div class="clearfix"></div>
     </div>
-    <select class="select" v-model="voiceSelect">
+    <select class="select" v-model="voiceSelect" @focus="speakDelayed('Choix de la langue')">
       <option v-for="option in options" :key="option.dataName">{{ option.dataName }}</option>
     </select>
     <div class="controls">
-      <button id="play" @click="speak">Test</button>
+      <button id="play" @click="speak('Bienvenue dans : Apprenti clavier')">Test</button>
+      <br>
+      <b-button pill variant="primary" @click.prevent="saveAndLeave">Retour au menu principal</b-button>
     </div>
   </form>
 </template>
 
 <script>
+import speakMixin from '../mixins/speakMixin'
+
 var synth = window.speechSynthesis
+var voices
 
 export default {
   name: 'SpeechControls',
+  mixins: [speakMixin],
   data () {
     return {
-      pitch: 1,
-      rate: 1,
+      pitch: '',
+      rate: '',
+      voice: null,
       voiceSelect: 'Google français',
-      voiceTest: 'Bienvenue dans apprenti clavier',
-      options: [],
-      voices: []
+      options: []
     }
   },
   mounted: function () {
     this.populateVoiceList()
     synth.addEventListener('voiceschanged', () => this.populateVoiceList())
+    this.speak('Vous pouvez régler la vitesse d\'élocution, la hauteur et la langue de la voix dans l\'application. Vous aurez un aperçu du rendu de la voix en appuyant sur le bouton Test.')
+  },
+  watch: {
+    $route (to, from) {
+      synth.cancel()
+    }
   },
   methods: {
     populateVoiceList () {
-      this.voices = synth.getVoices()
+      voices = synth.getVoices()
         .sort(function (a, b) {
           const aname = a.name.toUpperCase()
           const bname = b.name.toUpperCase()
@@ -49,36 +61,49 @@ export default {
           else if (aname === bname) return 0
           else return +1
         })
-      this.options = this.voices.map(voice => ({
+      this.options = voices.map(voice => ({
         textContent: `${voice.name} (${voice.lang})`,
         dataName: voice.name
       }))
+      this.pitch = this.$store.state.pitch
+      this.rate = this.$store.state.rate
     },
-    speak () {
+    speak (oral) {
       if (synth.speaking) {
-        console.error('speechSynthesis.speaking')
-        return
+        synth.cancel()
       }
-      var utterThis = new SpeechSynthesisUtterance(this.voiceTest)
-      utterThis.onend = function (event) {
-        console.log('SpeechSynthesisUtterance.onend')
-      }
-      utterThis.onerror = function (event) {
-        console.error('SpeechSynthesisUtterance.onerror')
-      }
-      utterThis.voice = this.voices[0]
-      for (var i = 0; i < this.voices.length; i++) {
-        if (this.voices[i].name === this.voiceSelect) {
-          utterThis.voice = this.voices[i]
-          break
+      if (oral !== '') {
+        var utterThis = new SpeechSynthesisUtterance(oral)
+        utterThis.onend = function (event) {
+          console.log('SpeechSynthesisUtterance.onend')
         }
+        utterThis.onerror = function (event) {
+          console.error('SpeechSynthesisUtterance.onerror')
+        }
+        for (var i = 0; i < voices.length; i++) {
+          if (voices[i].name === this.voiceSelect) {
+            this.voice = voices[i]
+            break
+          }
+        }
+        this.store()
+        utterThis.pitch = this.pitch
+        utterThis.rate = this.rate
+        utterThis.voice = this.voice
+        synth.speak(utterThis)
       }
+    },
+    speakDelayed (oral) {
+      setTimeout(() => this.speak(oral), 1500)
+    },
+    store () {
       this.$store.commit('updatePitch', this.pitch)
       this.$store.commit('updateRate', this.rate)
-      this.$store.commit('updateVoice', utterThis.voice)
-      utterThis.pitch = this.pitch
-      utterThis.rate = this.rate
-      synth.speak(utterThis)
+      this.$store.commit('updateVoice', this.voice)
+    },
+    saveAndLeave () {
+      this.store()
+      this.$router.push('/')
     }
   }
 }
@@ -86,19 +111,6 @@ export default {
 </script>
 
 <style scoped>
-body, html {
-  margin: 0;
-}
-
-html {
-  height: 100%;
-}
-
-body {
-  height: 90%;
-  max-width: 800px;
-  margin: 0 auto;
-}
 
 h1, p {
   font-family: sans-serif;
@@ -153,11 +165,18 @@ label {
 }
 
 .controls {
+  display: flex;
+  align-items: center;
+  flex-flow: wrap column;
   text-align: center;
   margin-top: 10px;
 }
 
 .controls button {
   padding: 10px;
+}
+
+.home-button{
+  padding: 50px;
 }
 </style>
