@@ -1,0 +1,28 @@
+name: CI / CD
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-n-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+
+      - name: Build 🛠
+        env:
+          PUBLIC_PATH: clavier
+        run: |
+          yarn
+          yarn build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        with:
+          branch: main
+          folder: dist
+          repository-name: digital4better/digital4better.github.io
+          target-folder: clavier
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
