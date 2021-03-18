@@ -11,7 +11,7 @@ export default {
   components: {
     Accueil
   },
-  mounted () {
+  created () {
     this.$store.commit('loadData')
   }
 }
