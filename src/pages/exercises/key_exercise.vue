@@ -10,7 +10,7 @@
     text-variant="black"
     header="Exercice 1"
     footer-tag="footer"
-    title="Appuie sur les touches suivantes :"
+    title="Appuie sur les touches :"
     style="font-family: 'Tiresias Infofont', arial">
     <link
       href="https://fr.allfont.net/allfont.css?fonts=tiresias-infofont"
