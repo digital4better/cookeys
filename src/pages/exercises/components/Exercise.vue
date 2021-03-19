@@ -9,7 +9,7 @@
     text-variant="black"
     :header="name"
     footer-tag="footer"
-    title="Saisis les mots suivants :"
+    title="Saisis au clavier :"
     style="font-family: 'Tiresias Infofont', arial">
 
     <link href="https://fr.allfont.net/allfont.css?fonts=tiresias-infofont" rel="stylesheet" type="text/css" />

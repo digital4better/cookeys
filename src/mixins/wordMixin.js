@@ -2,7 +2,7 @@
 export default {
   data () {
     return {
-      consigne: 'Saisis les mots suivants :',
+      consigne: 'Saisis au clavier :',
       word: '',
       cursor: 0,
       value: '',
