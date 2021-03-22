@@ -2,7 +2,7 @@
   <div class="landing-page">
     <div class="header">
       <div class="title">
-        <h1>Apprenti Clavier</h1>
+        <h1>CooKeys</h1>
         <p>Outil d'apprentissage de la frappe au clavier</p>
       </div>
       <div class="instructions">

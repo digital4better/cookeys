@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import Accueil from '@/pages/accueil.vue'
+import Home from '@/pages/home.vue'
 
 export default {
   components: {
-    Accueil
+    Home
   },
   created () {
     this.$store.commit('loadData')

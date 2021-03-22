@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Accueil from '@/pages/accueil'
+import Home from '@/pages/home'
 import KeyExercise from '@/pages/exercises/key_exercise'
 import LetterExercise from '@/pages/exercises/letter_exercise'
 import BothHandsWordExercise from '@/pages/exercises/both_hands_word_exercise'
@@ -20,8 +20,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'accueil',
-      component: Accueil
+      name: 'home',
+      component: Home
     },
     {
       path: '/speech_controls',

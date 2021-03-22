@@ -16,7 +16,7 @@
       <option v-for="option in options" :key="option.dataName">{{ option.dataName }}</option>
     </select>
     <div class="controls">
-      <button id="play" @click="speak('Bienvenue dans : Apprenti clavier')">Test</button>
+      <button id="play" @click="speak('Bienvenue dans : CooKeys')">Test</button>
       <br>
       <b-button pill variant="primary" @click.prevent="saveAndLeave">Retour au menu principal</b-button>
     </div>
