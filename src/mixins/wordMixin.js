@@ -11,7 +11,8 @@ export default {
       error: false,
       success: false,
       wordErrors: 0, // nb d'erreur par lettre
-      totalErrors: 0 // nb d'erreur total
+      totalErrors: 0, // nb d'erreur total
+      currentLetter: ''
     }
   },
   created () {
@@ -43,8 +44,8 @@ export default {
         return
       }
       this.attempts++
-      const currentLetter = this.word[this.cursor]
-      if (this.value[this.cursor] === currentLetter) {
+      this.currentLetter = this.word[this.cursor]
+      if (this.value[this.cursor] === this.currentLetter) {
         this.cursor++
         this.previousValue = this.value
       } else {
@@ -53,8 +54,8 @@ export default {
         this.wordErrors++
         this.totalErrors++
       }
-      if (currentLetter === ' ') this.speakDelayed('Espace')
-      else this.speakDelayed(currentLetter)
+      if (this.currentLetter === ' ') this.speakDelayed('Espace')
+      else this.speakDelayed(this.word[this.cursor])
 
       if (this.value === this.word) {
         this.error = false
@@ -69,8 +70,8 @@ export default {
     },
     changeWord () {
       this.nextWord()
-      setTimeout(() => this.speak(this.word), 1000)
-      setTimeout(() => this.speak(this.word[0]), 2000)
+      setTimeout(() => this.speak(this.word), 3000)
+      setTimeout(() => this.speak(this.word[0]), 4000)
     },
     initWord () {
       this.nextWord()

@@ -3,7 +3,7 @@
     <div class="header">
       <div class="title">
         <h1>CooKeys</h1>
-        <p>Outil d'apprentissage de la frappe au clavier</p>
+        <h2>Outil d'apprentissage de la frappe au clavier</h2>
       </div>
       <div class="instructions">
         <br>
