@@ -18,6 +18,7 @@ export default {
   },
   methods: {
     checkKey(e) {
+      // TODO: Fix Alt Gr evaluation
       const modifierCodes = [18, 27, 21];
       // we cancel the default action of the pressed key to not loose the focus
       if (modifierCodes.includes(e.keyCode)) {
@@ -25,9 +26,9 @@ export default {
       }
       console.log(e);
       this.attempts++;
-      if (e.keyCode !== this.key.keyCode) {
+      if (e.code !== this.key.code) {
         this.error = true;
-        e.target.value = '';
+        e.target.value = "";
         this.keyErrors++;
         this.totalErrors++;
       } else {
@@ -41,7 +42,10 @@ export default {
         }
       }
       this.value = e.target.value;
-      this.score = (((this.attempts - this.totalErrors) / this.attempts) * 100).toFixed(0);
+      this.score = (
+        ((this.attempts - this.totalErrors) / this.attempts) *
+        100
+      ).toFixed(0);
     },
     initKey() {
       this.success = false;
@@ -53,8 +57,8 @@ export default {
     },
     changeKey(e) {
       this.keyErrors = 0;
-      e.target.value = '';
-      this.value = '';
+      e.target.value = "";
+      this.value = "";
       if (this.keys.length > 0) {
         this.key = this.keys.shift();
         setTimeout(() => this.speak(this.key.name), 600);
