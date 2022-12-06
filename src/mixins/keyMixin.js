@@ -27,6 +27,7 @@ export default {
       console.log(e);
       this.attempts++;
       if (e.code !== this.key.code) {
+        this.errorFeedBack();
         this.error = true;
         e.target.value = "";
         this.keyErrors++;
