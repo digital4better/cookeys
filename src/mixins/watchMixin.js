@@ -1,16 +1,18 @@
-import Clock from '../components/clock.vue'
+import Clock from "../components/clock.vue";
 
 export default {
   components: { Clock },
   methods: {
-    startWatch () {
-      this.$refs.clock.start()
+    startWatch() {
+      setTimeout(() => {
+        this.$refs.clock.start();
+      }, 60);
     },
-    stopWatch () {
-      this.$refs.clock.stop()
+    stopWatch() {
+      this.$refs.clock.stop();
     },
-    resetWatch () {
-      this.$refs.clock.reset()
+    resetWatch() {
+      this.$refs.clock.reset();
     }
   }
-}
+};
