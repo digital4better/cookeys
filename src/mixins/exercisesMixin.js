@@ -6,9 +6,8 @@ export default {
       }
     }
   },
-  beforeRouteLeave(to, from, next) {
+  beforeDestroy: function() {
     this.resetWatch();
-    next();
   },
   methods: {
     clearRequireCache() {
