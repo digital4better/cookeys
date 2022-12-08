@@ -2,7 +2,7 @@ var synth = window.speechSynthesis;
 
 export default {
   methods: {
-    mapPunctuation(value) {
+    mapspecialChar(value) {
       switch (value) {
         case ",":
           return "Virgule";
@@ -14,6 +14,14 @@ export default {
           return "Point d'interrogation";
         case "'":
           return "Apostrophe";
+        case " ":
+          return "Espace";
+        case ":":
+          return "Deux points";
+        case ";":
+          return "Point virgule";
+        case "-":
+          return "Trait d'union";
         default:
           return value;
       }
@@ -23,8 +31,9 @@ export default {
         synth.cancel();
       }
       if (oral !== "") {
-        let utterThis;
-        utterThis = new SpeechSynthesisUtterance(this.mapPunctuation(oral));
+        const utterThis = new SpeechSynthesisUtterance(
+          this.mapspecialChar(oral)
+        );
         utterThis.onend = function(event) {
           console.log("SpeechSynthesisUtterance.onend");
         };

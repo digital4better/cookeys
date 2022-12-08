@@ -56,9 +56,7 @@ export default {
         this.wordErrors++;
         this.totalErrors++;
       }
-      if (this.currentLetter === " ") this.speakDelayed("Espace");
-      else this.speakDelayed(this.word[this.cursor]);
-
+      this.speakDelayed(this.word[this.cursor]);
       if (this.value === this.word) {
         this.error = false;
         this.success = true;
