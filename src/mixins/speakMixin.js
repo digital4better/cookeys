@@ -22,6 +22,18 @@ export default {
           return "Point virgule";
         case "-":
           return "Trait d'union";
+        case "(":
+          return "Parenthèse gauche";
+        case ")":
+          return "Parenthèse droite";
+        case "[":
+          return "crochet gauche";
+        case "]":
+          return "Crochet droit";
+        case "{":
+          return "Accolade gauche";
+        case "}":
+          return "Accolade droite";
         default:
           return value;
       }
