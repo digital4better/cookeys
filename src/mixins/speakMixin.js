@@ -59,7 +59,7 @@ export default {
       }
     },
     speak(oral) {
-      if (synth.speaking) {
+      if (synth.speaking && this.$store.state.oralPreview.length === 1) {
         synth.cancel();
       }
       if (oral !== "") {
@@ -76,6 +76,7 @@ export default {
         utterThis.pitch = this.$store.state.pitch;
         utterThis.rate = this.$store.state.rate;
         synth.speak(utterThis);
+        this.$store.commit("updateOralPreview", oral);
       }
     },
     stopSpeech() {
