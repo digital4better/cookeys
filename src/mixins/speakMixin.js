@@ -3,6 +3,9 @@ var synth = window.speechSynthesis;
 export default {
   methods: {
     mapspecialChar(value) {
+      if (/^[A-ZÉ]$/.test(value)) {
+        return value + " " + "majuscule";
+      }
       switch (value) {
         case ",":
           return "Virgule";
@@ -34,6 +37,23 @@ export default {
           return "Accolade gauche";
         case "}":
           return "Accolade droite";
+        case '"':
+          return "Guillemet";
+        case "è":
+          return "E accent grave";
+        case "ê":
+          return "E accent circonflexe";
+        case "ô":
+          return "O accent circonflexe";
+        case "â":
+          return "A accent grave";
+        case "é":
+          return "E accent aigu";
+        case "Î":
+          return "I accent circonflexe";
+        case "ë":
+          return "E tréma";
+
         default:
           return value;
       }
