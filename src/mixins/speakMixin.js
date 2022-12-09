@@ -53,6 +53,10 @@ export default {
           return "I accent circonflexe";
         case "ë":
           return "E tréma";
+        case "à":
+          return "A accent grave";
+        case "ç":
+          return "C cédille";
 
         default:
           return value;
