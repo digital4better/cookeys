@@ -2,43 +2,35 @@
   "keys": [
     {
       "keyCode": 18,
-      "name": "Alt gauche",
-      "code": "AltLeft"
+      "name": "Alt gauche"
     },
     {
       "keyCode": 16,
-      "name": "Maj gauche",
-      "code": "ShiftLeft"
+      "name": "Maj gauche"
     },
     {
       "keyCode": 13,
-      "name": "Entrée",
-      "code": "Enter"
+      "name": "Entrée"
     },
     {
       "keyCode": 17,
-      "name": "Control",
-      "code": "ControlLeft"
+      "name": "Control"
     },
     {
       "keyCode": 27,
-      "name": "Echap",
-      "code": "Escape"
+      "name": "Echap"
     },
     {
       "keyCode": 32,
-      "name": "Espace",
-      "code": "Space"
+      "name": "Espace"
     },
     {
       "keyCode": 8,
-      "name": "Retour arrière",
-      "code": "Backspace"
+      "name": "Retour arrière"
     },
     {
       "keyCode": 225,
-      "name": "Alt Gr",
-      "Code": "AltRight"
+      "name": "Alt Gr"
     }
   ],
 

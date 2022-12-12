@@ -18,7 +18,6 @@ export default {
   },
   methods: {
     checkKey(e) {
-      // TODO: Fix Alt Gr evaluation
       const modifierCodes = [18, 27, 21];
       // we cancel the default action of the pressed key to not loose the focus
       if (modifierCodes.includes(e.keyCode)) {
@@ -26,7 +25,7 @@ export default {
       }
       console.log(e);
       this.attempts++;
-      if (e.code !== this.key.code) {
+      if (e.keyCode !== this.key.keyCode) {
         this.errorFeedBack();
         this.error = true;
         e.target.value = "";
