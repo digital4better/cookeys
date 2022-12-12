@@ -90,6 +90,12 @@ export default {
     initContent () {
       const data = this.$store.state.data
       this.keys = [...data.keys]
+      if (navigator.appVersion.indexOf('OS X') !== -1 || navigator.appVersion.indexOf('Windows') !== -1) {
+        /**
+         * if we are on Windows or Mac we delete the Alt Gr evaluation because it doesn't work
+         */
+        this.keys.pop();
+      }
     }
   }
 }
