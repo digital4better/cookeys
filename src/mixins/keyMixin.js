@@ -1,70 +1,70 @@
 export default {
-  mounted: function() {
-    this.initContent();
-    this.speak(this.consigne);
-    this.initKey();
-    this.startWatch();
+  mounted: function () {
+    this.initContent()
+    this.speak(this.consigne)
+    this.initKey()
+    this.startWatch()
   },
   computed: {
-    hasMadeErrors() {
-      return this.keyErrors > 1;
+    hasMadeErrors () {
+      return this.keyErrors > 1
     },
-    hasMadeOneError() {
-      return this.keyErrors === 1;
+    hasMadeOneError () {
+      return this.keyErrors === 1
     },
-    isEnd() {
-      return this.keys.length === 0 && this.success === true;
+    isEnd () {
+      return this.keys.length === 0 && this.success === true
     }
   },
   methods: {
-    checkKey(e) {
-      const modifierCodes = [18, 27, 21];
+    checkKey (e) {
+      const modifierCodes = [18, 27, 21]
       // we cancel the default action of the pressed key to not loose the focus
       if (modifierCodes.includes(e.keyCode)) {
-        e.preventDefault();
+        e.preventDefault()
       }
-      console.log(e);
-      this.attempts++;
+      console.log(e)
+      this.attempts++
       if (e.keyCode !== this.key.keyCode) {
-        this.errorFeedBack();
-        this.error = true;
-        e.target.value = "";
-        this.keyErrors++;
-        this.totalErrors++;
+        this.errorFeedBack()
+        this.error = true
+        e.target.value = ''
+        this.keyErrors++
+        this.totalErrors++
       } else {
-        this.error = false;
-        this.success = true;
+        this.error = false
+        this.success = true
         if (this.keys.length !== 0) {
-          this.changeKey(e);
+          this.changeKey(e)
         } else {
-          this.congrat();
-          this.stopWatch();
+          this.congrat()
+          this.stopWatch()
         }
       }
-      this.value = e.target.value;
+      this.value = e.target.value
       this.score = (
         ((this.attempts - this.totalErrors) / this.attempts) *
         100
-      ).toFixed(0);
+      ).toFixed(0)
     },
-    initKey() {
-      this.success = false;
-      this.error = false;
+    initKey () {
+      this.success = false
+      this.error = false
       if (this.keys.length > 0) {
-        this.key = this.keys.shift();
+        this.key = this.keys.shift()
       }
-      setTimeout(() => this.speak(this.key.name), 4000);
+      setTimeout(() => this.speak(this.key.name), 4000)
     },
-    changeKey(e) {
-      this.keyErrors = 0;
-      e.target.value = "";
-      this.value = "";
+    changeKey (e) {
+      this.keyErrors = 0
+      e.target.value = ''
+      this.value = ''
       if (this.keys.length > 0) {
-        this.key = this.keys.shift();
-        setTimeout(() => this.speak(this.key.name), 600);
+        this.key = this.keys.shift()
+        setTimeout(() => this.speak(this.key.name), 600)
       }
-      this.success = false;
-      this.error = false;
+      this.success = false
+      this.error = false
     }
   }
-};
+}

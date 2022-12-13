@@ -1,25 +1,25 @@
 export default {
   directives: {
     focus: {
-      inserted: function(el) {
-        el.focus();
+      inserted: function (el) {
+        el.focus()
       }
     }
   },
-  beforeDestroy: function() {
-    this.resetWatch();
+  beforeDestroy: function () {
+    this.resetWatch()
   },
   methods: {
-    clearRequireCache() {
-      Object.keys(require.cache).forEach(function(key) {
-        delete require.cache[key];
-      });
+    clearRequireCache () {
+      Object.keys(require.cache).forEach(function (key) {
+        delete require.cache[key]
+      })
     },
-    congrat() {
-      setTimeout(() => this.speak("Bravo, l'exercice est terminé !"), 900);
+    congrat () {
+      setTimeout(() => this.speak("Bravo, l'exercice est terminé !"), 900)
     },
-    errorFeedBack() {
-      this.speak("Oups !");
+    errorFeedBack () {
+      this.speak('Oups !')
     }
   }
-};
+}
