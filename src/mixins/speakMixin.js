@@ -1,4 +1,4 @@
-var synth = window.speechSynthesis;
+const synth = window.speechSynthesis;
 
 export default {
   methods: {
