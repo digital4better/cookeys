@@ -12,7 +12,11 @@ export default new Vuex.Store({
   },
   mutations: {
     loadData (state) {
+      // we shuffle the data arrays in the store
       state.data = require('@/data/exercises_content.json')
+      for (const d in state.data) {
+        state.data[d] = state.data[d].sort(() => Math.random() - 0.5)
+      }
     },
     updateOralPreview (state, o) {
       state.oralPreview = o
