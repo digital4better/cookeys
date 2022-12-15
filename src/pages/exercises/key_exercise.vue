@@ -95,7 +95,7 @@ export default {
          * if we are on Windows or Mac we delete the Alt Gr evaluation because it doesn't work
          */
         this.keys = this.keys.filter(({keyCode}) => keyCode !== 225)
-        this.speak("Nous t'invitons à désactiver ton lecteur d'écran dans cette exercice, afin de bénéficier de la meilleure expérience possible.")
+        this.keys.pop();
       }
     }
   }
