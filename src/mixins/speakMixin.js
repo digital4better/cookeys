@@ -12,7 +12,7 @@ export default {
   methods: {
     mapspecialChar (value) {
       if (/^[A-ZÉ]$/.test(value)) {
-        return value + ' ' + 'majuscule'
+        return value + ' majuscule'
       }
       if (this.pronunciation.has(value)) {
         return this.pronunciation.get(value)
@@ -23,7 +23,7 @@ export default {
       this.pronunciation.set(',', 'Virgule')
       this.pronunciation.set('.', 'Point')
       this.pronunciation.set('!', "Point d'exclamation")
-      this.pronunciation.set('?', 'Point dinterrogation')
+      this.pronunciation.set('?', "Point d'interrogation")
       this.pronunciation.set("'", 'Apostrophe')
       this.pronunciation.set(':', 'Deux points')
       this.pronunciation.set('(', 'Parenthèse gauche')
@@ -36,7 +36,7 @@ export default {
       this.pronunciation.set('-', "Trait d'union")
       this.pronunciation.set('è', 'E accent grave')
       this.pronunciation.set('ê', 'E accent circonflexe')
-      this.pronunciation.set('ô', 'O circonflexe')
+      this.pronunciation.set('ô', 'O accent circonflexe')
       this.pronunciation.set('â', 'A accent circonflexe')
       this.pronunciation.set('é', 'E accent aigu')
       this.pronunciation.set('î', 'I accent circonflexe')
