@@ -1,4 +1,3 @@
-
 export default {
   data () {
     return {
@@ -15,7 +14,7 @@ export default {
       currentLetter: ''
     }
   },
-  created () {
+  mounted: function () {
     this.speak(this.consigne)
     this.initWord()
     this.startWatch()
@@ -25,16 +24,19 @@ export default {
       return this.word.split('')
     },
     hasMadeErrors () {
-      return (this.wordErrors > 1)
+      return this.wordErrors > 1
     },
     hasMadeOneError () {
-      return (this.wordErrors === 1)
+      return this.wordErrors === 1
     },
     isEnd () {
-      return (this.words.length === 0 && this.success === true)
+      return this.words.length === 0 && this.success === true
     },
     score () {
-      return (((this.attempts - this.totalErrors) / this.attempts) * 100).toFixed(0)
+      return (
+        ((this.attempts - this.totalErrors) / this.attempts) *
+        100
+      ).toFixed(0)
     }
   },
   methods: {
@@ -54,9 +56,7 @@ export default {
         this.wordErrors++
         this.totalErrors++
       }
-      if (this.currentLetter === ' ') this.speakDelayed('Espace')
-      else this.speakDelayed(this.word[this.cursor])
-
+      this.speakDelayed(this.word[this.cursor])
       if (this.value === this.word) {
         this.error = false
         this.success = true

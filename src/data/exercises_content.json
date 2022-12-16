@@ -27,10 +27,6 @@
     {
       "keyCode": 8,
       "name": "Retour arrière"
-    },
-    {
-      "keyCode": 225,
-      "name": "Alt Gr"
     }
   ],
 

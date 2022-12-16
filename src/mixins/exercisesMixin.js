@@ -6,9 +6,8 @@ export default {
       }
     }
   },
-  beforeRouteLeave (to, from, next) {
+  beforeDestroy: function () {
     this.resetWatch()
-    next()
   },
   methods: {
     clearRequireCache () {
@@ -17,7 +16,10 @@ export default {
       })
     },
     congrat () {
-      setTimeout(() => this.speak('Bravo, l\'exercice est terminé !'), 900)
+      setTimeout(() => this.speak("Bravo, l'exercice est terminé !"), 900)
+    },
+    errorFeedBack () {
+      this.speak('Oups !')
     }
   }
 }

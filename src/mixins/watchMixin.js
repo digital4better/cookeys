@@ -4,7 +4,9 @@ export default {
   components: { Clock },
   methods: {
     startWatch () {
-      this.$refs.clock.start()
+      setTimeout(() => {
+        this.$refs.clock.start()
+      }, 60)
     },
     stopWatch () {
       this.$refs.clock.stop()
