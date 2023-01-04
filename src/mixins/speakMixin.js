@@ -49,19 +49,22 @@ export default {
       if (synth.speaking && this.$store.state.oralPreview.length === 1) {
         synth.cancel()
       }
+      let utterThis
       if (oral !== '') {
-        const utterThis = new SpeechSynthesisUtterance(
+        utterThis = new SpeechSynthesisUtterance(
           this.mapspecialChar(oral)
         )
         utterThis.onend = function (event) {
           console.log('SpeechSynthesisUtterance.onend')
         }
         utterThis.onerror = function (event) {
-          console.error('SpeechSynthesisUtterance.onerror')
+          console.log('SpeechSynthesisUtterance.onerror')
         }
         utterThis.voice = this.$store.state.voice
         utterThis.pitch = this.$store.state.pitch
         utterThis.rate = this.$store.state.rate
+      }
+      if (oral !== undefined && utterThis !== undefined) {
         synth.speak(utterThis)
         this.$store.commit('updateOralPreview', oral)
       }
